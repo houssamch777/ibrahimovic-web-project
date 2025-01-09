@@ -6,7 +6,6 @@
     <!-- #title -->
     <title>البركة | جمعية البركة للعمل الخيري والإنساني</title>
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('layouts.rtl.style')
 </head>
 
