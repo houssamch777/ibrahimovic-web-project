@@ -18,7 +18,6 @@ Route::delete('/admin/gallery/{id}', [SettingsController::class, 'galleryDestroy
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
 // Artisan Command Route (for development or maintenance)
@@ -28,5 +27,5 @@ Route::get('/foo', function () {
     Artisan::call('route:clear');
     Artisan::call('view:clear');
     Artisan::call('storage:link');
-    return redirect()->route('index')->with('success', 'Welcome to the platform!');
+    return redirect()->route('home')->with('success', 'Welcome to the platform!');
 });
