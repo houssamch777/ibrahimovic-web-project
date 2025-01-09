@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('phone')->nullable(); // رقم الهاتف
+            $table->string('role')->default('user'); // دور المستخدم (admin أو user)
+            $table->boolean('is_active')->default(true); // حالة المستخدم (نشط أو غير نشط)
             $table->rememberToken();
             $table->timestamps();
         });

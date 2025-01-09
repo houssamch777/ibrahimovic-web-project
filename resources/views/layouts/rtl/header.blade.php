@@ -9,7 +9,7 @@
                             <div class="topbar__list-wrapper">
                                 <ul class="topbar__list">
                                     <li><a href="https://maps.app.goo.gl/X4z6dcMCiMqCfhwP8" target="_blank"><i
-                                                class="fa-solid fa-location-dot"></i>تعاونية الصومام 2 مكرر- لاكوت, بئر مراد رايس, الجزائر العاصمة, الجزائر</a>
+                                                class="fa-solid fa-location-dot"></i>تعاونية الصومام 2 مكرر- لاكوت, بئر مراد رايس, الجزائر العاصمة, الجزائر.</a>
                                     </li>
                                     <li><a href="mailto:support@example.com"><i
                                                 class="fa-regular fa-envelope"></i>support@example.com</a>
