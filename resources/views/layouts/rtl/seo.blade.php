@@ -26,7 +26,7 @@
 <meta property="og:title" content="جمعية البركة الجزائرية | دعم الأيتام والأعمال الخيرية">
 <meta property="og:description"
     content="ساهم معنا في دعم الأيتام والمحتاجين من خلال جمعية البركة الجزائرية. معًا نصنع الأمل ونساهم في بناء مستقبل مشرق للأجيال القادمة.">
-<meta property="og:image" content="logo.jpg"> <!-- رابط الصورة -->
+<meta property="og:image" content="{{ asset('logo.jpg') }}"> <!-- رابط الصورة -->
 <meta property="og:url" content="{{route('home')}}">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ar_DZ">
@@ -37,7 +37,7 @@
 <meta name="twitter:title" content="جمعية البركة الجزائرية | دعم الأيتام والأعمال الخيرية">
 <meta name="twitter:description"
     content="جمعية البركة الجزائرية تقدم المساعدة للمحتاجين من خلال برامج دعم متكاملة تشمل الأيتام والمحتاجين.">
-<meta name="twitter:image" content="logo.jpg">
+<meta name="twitter:image" content="{{ asset('logo.jpg') }}">
 
 <!-- Favicon -->
 <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon.png">
@@ -45,26 +45,33 @@
 
 <!-- Structured Data (JSON-LD) -->
 <script type="application/ld+json">
-    {
-  "@context": "https://schema.org",
-  "@type": "NonProfitOrganization",
-  "name": "جمعية البركة الجزائرية",
-  "url": "https://baraka.witslinks.com/",
-  "logo": "logo.jpg",
-  "description": "جمعية البركة الجزائرية هي منظمة خيرية تهدف إلى تقديم الدعم المالي والاجتماعي للأيتام والمحتاجين.",
-  "sameAs": [
+{
+    "@context": "https://schema.org",
+    "@type": "NonProfitOrganization",
+    "name": "جمعية البركة الجزائرية",
+    "url": "https://baraka.witslinks.com/",
+    "logo": "logo.jpg",
+    "description": "جمعية البركة الجزائرية هي منظمة خيرية تهدف إلى تقديم الدعم المالي والاجتماعي للأيتام والمحتاجين.",
+    "sameAs": [
     "https://www.facebook.com/Albarakahdz",
     "https://x.com/ElbarakahASO",
     "https://www.instagram.com/elbarakahdz",
     "https://www.youtube.com/c/elbarakadz",
     "https://www.tiktok.com/@elbarakahdzofficielle"
-  ],
-  "contactPoint": {
+    ],
+    "contactPoint": {
     "@type": "ContactPoint",
     "telephone": "+213-797-6910-31",
     "contactType": "Customer Service"
-  }
-}
+    },
+    "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "تعاونية الصومام 2 مكرر- لاكوت",
+    "addressLocality": "بئر مراد رايس",
+    "addressRegion": "الجزائر العاصمة",
+    "addressCountry": "DZ"
+    }
+    }
 </script>
 
 <!-- Sitemap -->
@@ -74,3 +81,4 @@
 <meta name="theme-color" content="#00a859"> <!-- تحسين عرض الألوان على الأجهزة -->
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
