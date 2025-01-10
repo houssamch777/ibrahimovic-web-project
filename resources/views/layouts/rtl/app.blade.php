@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    @include('layouts.rtl.ceo')
+    @include('layouts.rtl.seo')
     <!-- #title -->
     <title>البركة | جمعية البركة للعمل الخيري والإنساني</title>
 

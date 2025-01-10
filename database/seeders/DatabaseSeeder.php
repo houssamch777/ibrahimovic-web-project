@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
 
         User::factory()->create([
             'name' => 'Baraka Admin',
-            'email' => 'houssamcheriet01@gma',
+            'email' => 'houssamcheriet01@gmail.com',
             'password' => Hash::make('hOussamch@1'), // كلمة المرور مشفرة
             'role' => 'admin', // تحديد الدور كـ admin
             'is_active' => true, // جعل الحساب نشطًا
