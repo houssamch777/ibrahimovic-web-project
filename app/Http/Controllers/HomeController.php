@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contact;
 use App\Models\FeaturedProject;
 use App\Models\GalleryImage;
+use App\Models\Project;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -13,6 +15,41 @@ class HomeController extends Controller
     {
         $Images = GalleryImage::get();
         $project = FeaturedProject::first();
-        return view('welcome',compact('Images','project'));
+        $contact = Contact::first();
+        return view('welcome',compact('Images','project','contact'));
+    }
+    public function aboutCharity()
+    {
+        $contact = Contact::first();
+        return view('pages.about-us',compact('contact'));
+    }
+    public function contact(){
+        $contact = Contact::first();
+        return view('pages.contact',compact('contact'));
+    }
+    public function vision(){
+        $contact = Contact::first();
+        return view('pages.vision',compact('contact'));
+    }
+
+    public function projects(){
+        $contact = Contact::first();
+        $projects = Project::paginate(6);
+        $categories = Project::select('category', \DB::raw('COUNT(*) as count'))
+            ->groupBy('category')
+            ->get();
+        return view('pages.project.index', compact('contact','projects','categories'));
+    }
+    public function projectDetails($id)
+    {
+        $project = Project::findOrFail($id);
+        $contact = Contact::first();
+
+        return view('pages.project.details', compact('contact','project'));
+    }
+    public function branches()
+    {
+        $contact = Contact::first();
+        return view('pages.branches', compact('contact'));
     }
 }

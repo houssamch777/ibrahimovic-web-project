@@ -8,11 +8,11 @@
                         <div class="col-12 col-lg-7">
                             <div class="topbar__list-wrapper">
                                 <ul class="topbar__list">
-                                    <li><a href="https://maps.app.goo.gl/X4z6dcMCiMqCfhwP8" target="_blank"><i
-                                                class="fa-solid fa-location-dot"></i>تعاونية الصومام 2 مكرر- لاكوت, بئر مراد رايس, الجزائر العاصمة, الجزائر.</a>
+                                    <li><a href="{{$contact->google_map}}" target="_blank"><i
+                                                class="fa-solid fa-location-dot"></i>{{$contact->address}}</a>
                                     </li>
-                                    <li><a href="mailto:support@example.com"><i
-                                                class="fa-regular fa-envelope"></i>support@example.com</a>
+                                    <li><a href="mailto:{{$contact->email}}"><i
+                                                class="fa-regular fa-envelope"></i>{{$contact->email}}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -20,28 +20,34 @@
                         <div class="col-12 col-lg-5">
                             <div class="topbar__items justify-content-end">
 
-                                <p style="direction: ltr; text-align: left;"><a href="tel:+213-797-69-10-31"><i class="fa-solid fa-phone"></i>+213 797 69 10 31</a>
+                                <p style="direction: ltr; text-align: left;"><a href="tel:{{$contact->phone}}"><i
+                                            class="fa-solid fa-phone"></i>{{$contact->phone}}</a>
                                 </p>
                                 <div class="social">
-                                    <a href="https://www.facebook.com/Albarakahdz" target="_blank"
-                                        aria-label="share us on facebook" title="facebook">
-                                        <i class="fa-brands fa-facebook-f"></i>
+                                    @php
+                                    $socialLinks = [
+                                    'facebook' => ['url' => $contact->facebook, 'icon' => 'fa-facebook-f', 'label' =>
+                                    'facebook'],
+                                    'instagram' => ['url' => $contact->instagram, 'icon' => 'fa-instagram', 'label' =>
+                                    'instagram'],
+                                    'twitter' => ['url' => $contact->twitter, 'icon' => 'fa-twitter', 'label' =>
+                                    'twitter'],
+                                    'telegram' => ['url' => $contact->telegram, 'icon' => 'fa-telegram', 'label' =>
+                                    'telegram'],
+                                    'youtube' => ['url' => $contact->youtube, 'icon' => 'fa-youtube', 'label' =>
+                                    'youtube'],
+                                    'tiktok' => ['url' => $contact->tiktok, 'icon' => 'fa-tiktok', 'label' => 'tiktok'],
+                                    ];
+                                    @endphp
+
+                                    @foreach ($socialLinks as $key => $social)
+                                    @if (!empty($social['url']))
+                                    <a href="{{ $social['url'] }}" target="_blank"
+                                        aria-label="share us on {{ $social['label'] }}" title="{{ $social['label'] }}">
+                                        <i class="fa-brands {{ $social['icon'] }}"></i>
                                     </a>
-                                    <a href="https://www.instagram.com/elbarakahdz" target="_blank" aria-label="share us on instagram"
-                                        title="instagram">
-                                        <i class="fa-brands fa-instagram"></i>
-                                    </a>
-                                    <a href="https://x.com/Elbarakahdzz" target="_blank" aria-label="share us on twitter"
-                                        title="twitter">
-                                        <i class="fa-brands fa-twitter"></i>
-                                    </a>
-                                    <a href="https://t.me/elbarakadz" target="_blank"
-                                        aria-label="share us on telegram" title="telegram">
-                                        <i class="fa-brands fa-telegram"></i>
-                                    </a>
-                                    <a href="https://www.youtube.com/@elbarakahdz" target="_blank" aria-label="share us on tiktok" title="youtube">
-                                        <i class="fa-brands fa-youtube"></i>
-                                    </a>
+                                    @endif
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -60,36 +66,75 @@
                 <div class="main-header__menu-box">
                     <nav class="navbar p-0">
                         <div class="navbar-logo">
-                            <a href="index.html">
+                            <a href="{{route('home')}}">
                                 <img src="assets/images/logo.png" alt="Image">
                             </a>
                         </div>
                         <div class="navbar__menu d-none d-xl-block">
                             <ul class="navbar__list">
                                 <li class="navbar__item nav-fade">
-                                    <a href="#" class="navbar__link">الرئيسية</a>
-                                </li>
-                                <li class="navbar__item nav-fade">
-                                    <a href="#" class="navbar__link">عن الجمعية</a>
+                                    <a href="{{route('home')}}" class="navbar__link">الرئيسية</a>
                                 </li>
                                 <li class="navbar__item navbar__item--has-children nav-fade">
-                                    <a href="#" class="navbar__link">خدماتنا</a>
+                                    <a href="#" aria-label="dropdown menu"
+                                        class="navbar__dropdown-label dropdown-label-alter">عن الجمعية</a>
                                     <ul class="navbar__sub-menu">
-                                        <li><a href="#">خدمة 1</a></li>
-                                        <li><a href="#">خدمة 2</a></li>
+                                        <li>
+                                            <a href="{{route('about')}}">النشأة والتأسيس</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{route('vision')}}">الرؤية والرسالة</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">رئيس الجمعية</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">فريق العمل</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">مكاتبنا</a>
+                                        </li>
                                     </ul>
                                 </li>
-                                <li class="navbar__item nav-fade">
-                                    <a href="#" class="navbar__link">المركز الإعلامي</a>
+                                <li class="navbar__item navbar__item--has-children nav-fade">
+                                    <a href="#" aria-label="dropdown menu"
+                                        class="navbar__dropdown-label dropdown-label-alter">خدمات</a>
+                                    <ul class="navbar__sub-menu">
+                                        <li>
+                                            <a href="{{route('projects')}}">مشاريعنا</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">مناشدات</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">ميثاق العائلة الجزائرية</a>
+                                        </li>
+                                    </ul>
                                 </li>
-                                <li class="navbar__item nav-fade">
-                                    <a href="#" class="navbar__link">شركاء النجاح</a>
+                                <li class="navbar__item navbar__item--has-children nav-fade">
+                                    <a href="#" aria-label="dropdown menu"
+                                        class="navbar__dropdown-label dropdown-label-alter">المركز الإعلامي</a>
+                                    <ul class="navbar__sub-menu">
+                                        <li>
+                                            <a href="#">أخر الأخبار</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">معرض الصور</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">معرض الفيديوات</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">وثائق وتقارير</a>
+                                        </li>
+                                    </ul>
                                 </li>
-                                <li class="navbar__item nav-fade">
-                                    <a href="#" class="navbar__link">اتصل بنا</a>
-                                </li>
+
                                 <li class="navbar__item nav-fade">
                                     <a href="#" class="navbar__link">الحسابات البنكية</a>
+                                </li>
+                                <li class="navbar__item nav-fade">
+                                    <a href="{{ route('contact') }}" class="navbar__link">اتصل بنا</a>
                                 </li>
                             </ul>
                         </div>
@@ -98,9 +143,6 @@
                                 <div class="select-country d-none d-xxl-block">
                                     <select name="country" class="country-select select">
                                         <option data-flag="fi-dz">العربية</option>
-                                        <option data-flag="fi-us">Spanish</option>
-                                        <option data-flag="fi-cn">Chinese</option>
-                                        <option data-flag="fi-it">Italian</option>
                                     </select>
                                 </div>
                                 <a href="donate-us.html" class="btn--primary d-none d-md-flex">بوابة التطوع <i
@@ -125,7 +167,7 @@
     <nav class="mobile-menu__wrapper">
         <div class="mobile-menu__header nav-fade">
             <div class="logo">
-                <a href="index.html" aria-label="home page" title="logo">
+                <a href="{{route('home')}}" aria-label="home page" title="logo">
                     <img src="assets/images/logo.png" alt="Image">
                 </a>
             </div>
@@ -135,46 +177,44 @@
         </div>
         <div class="mobile-menu__list"></div>
         <div class="mobile-menu__cta nav-fade d-block d-md-none">
-            <a href="donate-us.html" class="btn--primary ">Donate Now <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="#" class="btn--primary ">بوابة التطوع <i class="fa-solid fa-arrow-right"></i></a>
         </div>
         <div class="mobile-menu__social social nav-fade">
-            <a href="https://www.facebook.com/" target="_blank" aria-label="share us on facebook" title="facebook">
-                <i class="fa-brands fa-facebook-f"></i>
+            @php
+            $socialLinks = [
+            'facebook' => ['url' => $contact->facebook, 'icon' => 'fa-facebook-f', 'label' =>
+            'facebook'],
+            'instagram' => ['url' => $contact->instagram, 'icon' => 'fa-instagram', 'label' =>
+            'instagram'],
+            'twitter' => ['url' => $contact->twitter, 'icon' => 'fa-twitter', 'label' =>
+            'twitter'],
+            'telegram' => ['url' => $contact->telegram, 'icon' => 'fa-telegram', 'label' =>
+            'telegram'],
+            'youtube' => ['url' => $contact->youtube, 'icon' => 'fa-youtube', 'label' =>
+            'youtube'],
+            'tiktok' => ['url' => $contact->tiktok, 'icon' => 'fa-tiktok', 'label' => 'tiktok'],
+            ];
+            @endphp
+
+            @foreach ($socialLinks as $key => $social)
+            @if (!empty($social['url']))
+            <a href="{{ $social['url'] }}" target="_blank" aria-label="share us on {{ $social['label'] }}"
+                title="{{ $social['label'] }}">
+                <i class="fa-brands {{ $social['icon'] }}"></i>
             </a>
-            <a href="https://vimeo.com/" target="_blank" aria-label="share us on vimeo" title="vimeo">
-                <i class="fa-brands fa-vimeo-v"></i>
-            </a>
-            <a href="https://x.com/" target="_blank" aria-label="share us on twitter" title="twitter">
-                <i class="fa-brands fa-twitter"></i>
-            </a>
-            <a href="https://www.linkedin.com/" target="_blank" aria-label="share us on linkedin" title="linkedin">
-                <i class="fa-brands fa-linkedin-in"></i>
-            </a>
+            @endif
+            @endforeach
         </div>
     </nav>
 </div>
 <div class="mobile-menu__backdrop"></div>
 <!-- ==== / mobile menu end ==== -->
-<!-- ==== search popup start ==== -->
-<div class="search-popup">
-    <button class="close-search" aria-label="close search box" title="close search box">
-        <i class="fa-solid fa-xmark"></i>
-    </button>
-    <form action="#" method="post">
-        <div class="search-popup__group">
-            <input type="text" name="search-field" id="searchField" placeholder="Search...." required>
-            <button type="submit" aria-label="search products" title="search products">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
-        </div>
-    </form>
-</div>
-<!-- ==== / search popup end ==== -->
+
 <!-- ==== off canvas start ==== -->
 <div class="off-canvas d-none d-xl-block">
     <div class="off-canvas__inner">
         <div class="off-canvas__head">
-            <a href="index.html">
+            <a href="{{route('home')}}">
                 <img src="assets/images/logo.png" alt="Logo">
             </a>
             <button aria-label="close off canvas" class="off-canvas-close">
@@ -233,90 +273,5 @@
 </div>
 <div class="off-canvas-backdrop"></div>
 <!-- ==== / off canvas end ==== -->
-<!-- ==== sidebar cart start ==== -->
-<div class="sidebar-cart">
-    <div class="der">
-        <button class="close-cart">
-            <span class="close-icon">X</span>
-        </button>
-        <h2>
-            Shopping Bag
-            <span class="count">2</span>
-        </h2>
-        <div class="cart-items">
-            <div class="cart-item-single">
-                <div class="cart-item-thumb">
-                    <a href="service-details.html">
-                        <img src="assets/images/cart.jpg" alt="Image">
-                    </a>
-                </div>
-                <div class="cart-item-content">
-                    <h6 class="h6 title-anim">
-                        <a href="service-details.html">Product One</a>
-                    </h6>
-                    <p class="price">
-                        $
-                        <span class="item-price">34.99</span>
-                    </p>
-                    <div class="measure">
-                        <button aria-label="decrease item" class="quantity-decrease">
-                            <i class="fa-solid fa-minus"></i>
-                        </button>
-                        <span class="item-quantity">0</span>
-                        <button aria-label="add item" class="quantity-increase">
-                            <i class="fa-solid fa-plus"></i>
-                        </button>
-                    </div>
-                </div>
-                <button aria-label="delete item" class="delete-item">
-                    <i class="fa-solid fa-trash"></i>
-                </button>
-            </div>
-            <div class="cart-item-single">
-                <div class="cart-item-thumb">
-                    <a href="service-details.html">
-                        <img src="assets/images/cart.jpg" alt="Image">
-                    </a>
-                </div>
-                <div class="cart-item-content">
-                    <h6 class="h6 title-anim">
-                        <a href="service-details.html">Product Two</a>
-                    </h6>
-                    <p class="price">
-                        $
-                        <span class="item-price">34.99</span>
-                    </p>
-                    <div class="measure">
-                        <button aria-label="decrease item" class="quantity-decrease">
-                            <i class="fa-solid fa-minus"></i>
-                        </button>
-                        <span class="item-quantity">0</span>
-                        <button aria-label="add item" class="quantity-increase">
-                            <i class="fa-solid fa-plus"></i>
-                        </button>
-                    </div>
-                </div>
-                <button aria-label="delete item" class="delete-item">
-                    <i class="fa-solid fa-trash"></i>
-                </button>
-            </div>
-        </div>
-        <div class="totals">
-            <div class="subtotal">
-                <span class="label">Subtotal:</span>
-                <span class="amount ">
-                    $
-                    <span class="total-price">0.00</span>
-                </span>
-            </div>
-        </div>
-        <div class="action-buttons">
-            <a class="view-cart-button" href="cart.html" aria-label="go to cart">Cart</a>
-            <a class="checkout-button" href="checkout.html" aria-label="go to checkout">
-                Checkout
-                <i class="fa-solid fa-arrow-right-long"></i>
-            </a>
-        </div>
-    </div>
-</div>
+
 <div class="cart-backdrop"></div>

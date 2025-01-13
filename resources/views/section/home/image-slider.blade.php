@@ -33,7 +33,7 @@
                         @foreach ($Images as $image)
                         <div class="swiper-slide">
                             <div class="cause-content">
-                                <h4>صور الشــهر</h4>
+                                <h4 class="fs-1 mb-3">البركة في صور</h4>
                                 <p>{{ $image->title ?? '' }}</p>
                             </div>
                         </div>

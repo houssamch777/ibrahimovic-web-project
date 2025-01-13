@@ -5,19 +5,19 @@
     <div class="navbar-brand-box">
         <a href="{{ route('admin') }}" class="logo logo-dark">
             <span class="logo-sm">
-                <img src="build/images/logo-sm-dark.png" alt="شعار الجمعية" height="30">
+                <img src="{{asset('build/images/logo-sm-dark.png')}}" alt="شعار الجمعية" height="30">
             </span>
             <span class="logo-lg">
-                <img src="build/images/logo-dark.png" alt="شعار الجمعية" height="30">
+                <img src="{{asset('build/images/logo-dark.png')}}" alt="شعار الجمعية" height="30">
             </span>
         </a>
 
         <a href="{{ route('admin') }}" class="logo logo-light">
             <span class="logo-sm">
-                <img src="build/images/logo-sm-light.png" alt="شعار الجمعية" height="30">
+                <img src="{{asset('build/images/logo-sm-light.png')}}" alt="شعار الجمعية" height="30">
             </span>
             <span class="logo-lg">
-                <img src="build/images/logo-light.png" alt="شعار الجمعية" height="30">
+                <img src="{{asset('build/images/logo-light.png')}}" alt="شعار الجمعية" height="30">
             </span>
         </a>
     </div>
@@ -43,8 +43,20 @@
                 </li>
                 <li>
                     <a href="{{ route('settings') }}" class="waves-effect">
-                        <i class="uim uim-bag"></i>
+                        <i class="uim uim-upload-alt"></i>
                         <span>الإعدادات العامة</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.branch.index') }}" class="waves-effect">
+                        <i class="uim uim-bag"></i>
+                        <span>إدارة الفروع</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('admin.projects.index')}}" class="waves-effect">
+                        <i class="uim uim-circle-layer"></i>
+                        <span>إدارة المشاريع</span>
                     </a>
                 </li>
                 <li>
@@ -81,15 +93,6 @@
                         <span>التقارير والإحصائيات</span>
                     </a>
                 </li>
-
-                <li>
-                    <a href="projects" class="waves-effect">
-                        <i class="uim uim-circle-layer"></i>
-                        <span>إدارة المشاريع</span>
-                    </a>
-                </li>
-
-
                 <li>
                     <a href="support" class="waves-effect">
                         <i class="uim uim-comment-alt-dots"></i>
@@ -106,8 +109,8 @@
             aria-haspopup="true" aria-expanded="false">
             <span class="d-flex align-items-center">
                 <div class="flex-shrink-0">
-                    <img src="build/images/users/avatar-2.jpg" class="img-fluid header-profile-user rounded-circle"
-                        alt="المستخدم">
+                    <img src="{{ Auth::user()->profile_picture ? asset('storage/' . Auth::user()->profile_picture) : asset('build/images/users/avatar-2.jpg') }}"
+                        class="img-fluid header-profile-user rounded-circle" alt="المستخدم">
                 </div>
 
                 <div class="flex-grow-1 ms-2 text-start">
@@ -120,9 +123,9 @@
             </span>
         </button>
         <div class="dropdown-menu dropdown-menu-end">
-            <a class="dropdown-item" href="profile"><i
+            <button type="button" class="dropdown-item" id="choose-file-button"><i
                     class="mdi mdi-account-circle text-muted font-size-16 align-middle me-1"></i> <span
-                    class="align-middle">تغيير الصورة الشخصية</span></a>
+                    class="align-middle">تغيير الصورة الشخصية</span></button>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="settings"><i
                     class="mdi mdi-cog-outline text-muted font-size-16 align-middle me-1"></i> <span
@@ -137,4 +140,31 @@
         </div>
     </div>
 </div>
-<!-- Left Sidebar End -->
+
+<form action="{{ route('profile.update') }}" method="POST" id="profile-image-form" enctype="multipart/form-data">
+    @csrf
+    <input id="file-upload" name="file" type="file" accept="image/*" style="display: none;" required>
+    <input type="hidden" id="cropped-image" name="cropped_image">
+
+    <!-- Modal for cropping the image -->
+    <div id="cropperModal" class="modal fade" tabindex="-1" aria-labelledby="cropperModalLabel" aria-hidden="true"
+        data-bs-scroll="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cropperModalLabel">Crop Your Image</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <img id="image-preview" style="max-width: 100%;">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="crop-and-submit">Crop & Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

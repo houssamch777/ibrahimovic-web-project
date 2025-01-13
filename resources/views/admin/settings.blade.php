@@ -20,100 +20,125 @@
     <div class="row">
         <div class="col-xl-5">
             <div class="card">
-                <div class="card-header border-0 align-items-center d-flex pb-0">
-                    <h4 class="card-title  flex-grow-1 fs-4 ">معلومات الاتصال بالجمعية</h4>
-                </div>
-                <div class="card-body">
-                    <div class="row mb-3">
-                        <label for="address" class="col-sm-3 col-form-label">عنوان المقر</label>
-                        <div class="col-sm-9">
-                            <input class="form-control" style="text-align: right" type="text"
-                                placeholder="تعاونية الصومام 2 مكرر- لاكوت, بئر مراد رايس, الجزائر العاصمة, الجزائر."
-                                id="address">
+                <form method="POST" action="{{ route('contact.update') }}">
+                    @csrf
+                    <div class="card-header border-0 align-items-center d-flex pb-0">
+                        <h4 class="card-title flex-grow-1 fs-4">معلومات الاتصال بالجمعية</h4>
+                    </div>
+                    <div class="card-body">
+                        <!-- عنوان المقر -->
+                        <div class="row mb-3">
+                            <label for="address" class="col-sm-3 col-form-label">عنوان المقر</label>
+                            <div class="col-sm-9">
+                                <input class="form-control @error('address') is-invalid @enderror" type="text" name="address"
+                                    id="address" value="{{ old('address', optional($contact)->address) }}"
+                                    placeholder="تعاونية الصومام 2 مكرر- لاكوت, بئر مراد رايس, الجزائر العاصمة, الجزائر."
+                                    style="direction: rtl;text-align: right">
+                                @error('address')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+            
+                        <!-- رقم الهاتف -->
+                        <div class="row mb-3">
+                            <label for="phone" class="col-sm-3 col-form-label">رقم الهاتف في الجزائر</label>
+                            <div class="col-sm-9">
+                                <input class="form-control @error('phone') is-invalid @enderror" type="tel" name="phone" id="phone"
+                                    value="{{ old('phone', optional($contact)->phone) }}" placeholder="+213-797-6910-31">
+                                @error('phone')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+            
+                        <!-- رقم الهاتف الدولي البديل -->
+                        <div class="row mb-3">
+                            <label for="alt_phone" class="col-sm-3 col-form-label">رقم الهاتف الدولي</label>
+                            <div class="col-sm-9">
+                                <input class="form-control @error('alt_phone') is-invalid @enderror" type="tel" name="alt_phone"
+                                    id="alt_phone" value="{{ old('alt_phone', optional($contact)->alt_phone) }}"
+                                    placeholder="+213-700-1234-56">
+                                @error('alt_phone')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+            
+                        <!-- البريد الإلكتروني -->
+                        <div class="row mb-3">
+                            <label for="email" class="col-sm-3 col-form-label">البريد الإلكتروني</label>
+                            <div class="col-sm-9">
+                                <input class="form-control @error('email') is-invalid @enderror" type="email" name="email"
+                                    id="email" value="{{ old('email', optional($contact)->email) }}"
+                                    placeholder="example@domain.com">
+                                @error('email')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+            
+                        <!-- رابط موقع خرائط Google -->
+                        <div class="row mb-3">
+                            <label for="google_map" class="col-sm-3 col-form-label">رابط خرائط Google</label>
+                            <div class="col-sm-9">
+                                <input class="form-control @error('google_map') is-invalid @enderror" type="url" name="google_map"
+                                    id="google_map" value="{{ old('google_map', optional($contact)->google_map) }}"
+                                    placeholder="https://www.google.com/maps">
+                                @error('google_map')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+            
+                        <!-- ساعات العمل -->
+                        <div class="row mb-3">
+                            <label for="working_hours" class="col-sm-3 col-form-label">ساعات العمل</label>
+                            <div class="col-sm-9">
+                                <input class="form-control @error('working_hours') is-invalid @enderror" type="text"
+                                    name="working_hours" id="working_hours"
+                                    value="{{ old('working_hours', optional($contact)->working_hours) }}"
+                                    placeholder="08:00 صباحاً - 05:00 مساءً">
+                                @error('working_hours')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+            
+                        <!-- روابط وسائل التواصل الاجتماعي -->
+                        @php
+                        $social_media = [
+                        'facebook' => 'رابط صفحة الفيسبوك',
+                        'youtube' => 'رابط قناة اليوتيوب',
+                        'telegram' => 'رابط قناة التلقرام',
+                        'tiktok' => 'رابط صفحة التيكتوك',
+                        'instagram' => 'رابط صفحة الانستقرام',
+                        'twitter' => 'رابط صفحة تويتر'
+                        ];
+                        @endphp
+            
+                        @foreach($social_media as $key => $label)
+                        <div class="row mb-3">
+                            <label for="{{ $key }}" class="col-sm-3 col-form-label">{{ $label }}</label>
+                            <div class="col-sm-9">
+                                <input class="form-control @error($key) is-invalid @enderror" type="url" name="{{ $key }}"
+                                    id="{{ $key }}" value="{{ old($key, optional($contact)->$key) }}"
+                                    placeholder="https://www.{{ $key }}.com">
+                                @error($key)
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        @endforeach
+            
+                        <!-- زر التحديث -->
+                        <div class="text-end pt-2">
+                            <button type="submit" class="btn btn-success waves-effect waves-light">
+                                <i class="mdi mdi-arrow-left ms-1"></i> تحديث
+                            </button>
                         </div>
                     </div>
-                    <!-- رقم الهاتف -->
-                    <div class="row mb-3">
-                        <label for="phone" class="col-sm-3 col-form-label">رقم الهاتف</label>
-                        <div class="col-sm-9">
-                            <input class="form-control" style="text-align: right" type="tel"
-                                placeholder="+(213)-797-6910-31" id="phone">
-                        </div>
-                    </div>
-                    <!-- البريد الإلكتروني -->
-                    <div class="row mb-3">
-                        <label for="email" class="col-sm-3 col-form-label">البريد الإلكتروني</label>
-                        <div class="col-sm-9">
-                            <input class="form-control" style="text-align: right" type="email"
-                                placeholder="example@domain.com" id="email">
-                        </div>
-                    </div>
-                    <!-- رابط موقع خرائط قوقل -->
-                    <div class="row mb-3">
-                        <label for="google-map" class="col-sm-3 col-form-label">رابط موقع خرائط Google</label>
-                        <div class="col-sm-9">
-                            <input class="form-control" type="url" placeholder="https://www.google.com/maps"
-                                id="google-map">
-                        </div>
-                    </div>
-                    <!-- ساعات العمل -->
-                    <div class="row mb-3">
-                        <label for="working-hours" class="col-sm-3 col-form-label">ساعات العمل</label>
-                        <div class="col-sm-9">
-                            <input class="form-control" type="text" placeholder="08:00 صباحاً - 05:00 مساءً"
-                                id="working-hours">
-                        </div>
-                    </div>
-                    <!-- رابط صفحة الفيسبوك -->
-                    <div class="row mb-3">
-                        <label for="facebook" class="col-sm-3 col-form-label">رابط صفحة الفيسبوك</label>
-                        <div class="col-sm-9">
-                            <input class="form-control" type="url" placeholder="https://www.facebook.com" id="facebook">
-                        </div>
-                    </div>
-                    <!-- رابط قناة اليوتيوب -->
-                    <div class="row mb-3">
-                        <label for="youtube" class="col-sm-3 col-form-label">رابط قناة اليوتيوب</label>
-                        <div class="col-sm-9">
-                            <input class="form-control" type="url" placeholder="https://www.youtube.com" id="youtube">
-                        </div>
-                    </div>
-                    <!-- رابط قناة التلقرام -->
-                    <div class="row mb-3">
-                        <label for="telegram" class="col-sm-3 col-form-label">رابط قناة التلقرام</label>
-                        <div class="col-sm-9">
-                            <input class="form-control" type="url" placeholder="https://www.telegram.me" id="telegram">
-                        </div>
-                    </div>
-                    <!-- رابط صفحة التيكتوك -->
-                    <div class="row mb-3">
-                        <label for="tiktok" class="col-sm-3 col-form-label">رابط صفحة التيكتوك</label>
-                        <div class="col-sm-9">
-                            <input class="form-control" type="url" placeholder="https://www.tiktok.com" id="tiktok">
-                        </div>
-                    </div>
-                    <!-- رابط صفحة الانستقرام -->
-                    <div class="row mb-3">
-                        <label for="instagram" class="col-sm-3 col-form-label">رابط صفحة الانستقرام</label>
-                        <div class="col-sm-9">
-                            <input class="form-control" type="url" placeholder="https://www.instagram.com"
-                                id="instagram">
-                        </div>
-                    </div>
-                    <!-- رابط صفحة تويتر -->
-                    <div class="row mb-3">
-                        <label for="twitter" class="col-sm-3 col-form-label">رابط صفحة تويتر</label>
-                        <div class="col-sm-9">
-                            <input class="form-control" type="url" placeholder="https://www.twitter.com" id="twitter">
-                        </div>
-                    </div>
-                    <!-- زر التحديث -->
-                    <div class="text-end pt-2">
-                        <button type="button" class="btn btn-success waves-effect waves-light">
-                            <i class="mdi mdi-arrow-left ms-1"></i> تحديث
-                        </button>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
         <div class="col-xl-7">

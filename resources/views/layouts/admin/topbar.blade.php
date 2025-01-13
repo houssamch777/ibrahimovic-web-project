@@ -6,19 +6,19 @@
             <div class="navbar-brand-box">
                 <a href="index" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="build/images/logo-dark.png" alt="logo-sm-dark" height="24">
+                        <img src="{{ asset('build/images/logo-dark.png')}}" alt="logo-sm-dark" height="24">
                     </span>
                     <span class="logo-lg">
-                        <img src="build/images/logo-sm-dark.png" alt="logo-dark" height="25">
+                        <img src="{{ asset('build/images/logo-sm-dark.png')}}" alt="logo-dark" height="25">
                     </span>
                 </a>
 
                 <a href="index" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="build/images/logo-light.png" alt="logo-sm-light" height="24">
+                        <img src="{{ asset('build/images/logo-light.png')}}" alt="logo-sm-light" height="24">
                     </span>
                     <span class="logo-lg">
-                        <img src="build/images/logo-sm-light.png" alt="logo-light" height="25">
+                        <img src="{{ asset('build/images/logo-sm-light.png')}}" alt="logo-light" height="25">
                     </span>
                 </a>
             </div>
@@ -78,7 +78,7 @@
                         </a>
                         <a href="" class="text-reset notification-item">
                             <div class="d-flex">
-                                <img src="build/images/users/avatar-3.jpg"
+                                <img src="{{ asset('build/images/users/avatar-3.jpg')}}"
                                     class="me-3 rounded-circle avatar-xs" alt="user-pic">
                                 <div class="flex-1">
                                     <h6 class="mb-1">James Lemire</h6>
@@ -108,7 +108,7 @@
 
                         <a href="" class="text-reset notification-item">
                             <div class="d-flex">
-                                <img src="build/images/users/avatar-4.jpg"
+                                <img src="{{ asset('build/images/users/avatar-4.jpg')}}"
                                     class="me-3 rounded-circle avatar-xs" alt="user-pic">
                                 <div class="flex-1">
                                     <h6 class="mb-1">Salena Layfield</h6>

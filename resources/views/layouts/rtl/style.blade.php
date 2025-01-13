@@ -3,7 +3,7 @@
 <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
 <link rel="icon" href="assets/images/favicon.png" type="image/x-icon">
 
-
+@vite(['resources/js/app.js', 'resources/sass/app.scss'])
 <!-- google fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,3 +18,5 @@
 <link rel="stylesheet" href="assets/css/default-theme.css">
 <!-- rtl mode -->
 <link rel="stylesheet" href="assets/css/rtl.css">
+
+@yield('css')

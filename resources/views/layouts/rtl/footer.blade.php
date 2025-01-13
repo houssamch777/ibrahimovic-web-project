@@ -13,28 +13,37 @@
                 <div class="footer-three__inner" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300">
                     <div class="footer__bottom-left">
                         <ul class="footer__bottom-list justify-content-center justify-content-lg-end">
-                            <li><a href="">عن الجمعية</a></li>
-                            <li><a href="">برامجنا</a></li>
-                            <li><a href="">تواصل معنا</a></li>
+                            <li><a href="{{route('about')}}">عن الجمعية</a></li>
+                            <li><a href="{{route('projects')}}">برامجنا</a></li>
+                            <li><a href="{{route('contact')}}">تواصل معنا</a></li>
                         </ul>
                     </div>
                     <div class="social">
-                        <a href="https://www.facebook.com/yourpage" target="_blank" aria-label="تابعنا على فيسبوك"
-                            title="فيسبوك">
-                            <i class="fa-brands fa-facebook-f"></i>
+                        @php
+                        $socialLinks = [
+                        'facebook' => ['url' => $contact->facebook, 'icon' => 'fa-facebook-f', 'label' =>
+                        'facebook'],
+                        'instagram' => ['url' => $contact->instagram, 'icon' => 'fa-instagram', 'label' =>
+                        'instagram'],
+                        'twitter' => ['url' => $contact->twitter, 'icon' => 'fa-twitter', 'label' =>
+                        'twitter'],
+                        'telegram' => ['url' => $contact->telegram, 'icon' => 'fa-telegram', 'label' =>
+                        'telegram'],
+                        'youtube' => ['url' => $contact->youtube, 'icon' => 'fa-youtube', 'label' =>
+                        'youtube'],
+                        'tiktok' => ['url' => $contact->tiktok, 'icon' => 'fa-tiktok', 'label' => 'tiktok'],
+                        ];
+                        @endphp
+
+                        @foreach ($socialLinks as $key => $social)
+                        @if (!empty($social['url']))
+                        <a href="{{ $social['url'] }}" target="_blank" aria-label="share us on {{ $social['label'] }}"
+                            title="{{ $social['label'] }}">
+                            <i class="fa-brands {{ $social['icon'] }}"></i>
                         </a>
-                        <a href="https://twitter.com/yourpage" target="_blank" aria-label="تابعنا على تويتر"
-                            title="تويتر">
-                            <i class="fa-brands fa-twitter"></i>
-                        </a>
-                        <a href="https://www.linkedin.com/yourpage" target="_blank" aria-label="تابعنا على لينكدإن"
-                            title="لينكدإن">
-                            <i class="fa-brands fa-linkedin-in"></i>
-                        </a>
-                        <a href="https://www.youtube.com/yourchannel" target="_blank" aria-label="تابعنا على يوتيوب"
-                            title="يوتيوب">
-                            <i class="fa-brands fa-youtube"></i>
-                        </a>
+                        
+                        @endif
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -51,15 +60,14 @@
                     <div class="footer-three__widget-single">
                         <p>جمعية البركة للعمل الخيري والإنساني هي جمعية تهدف إلى تعزيز التضامن الاجتماعي وتقديم العون
                             للمحتاجين في مختلف المجالات.</p>
-                        <p><a href="mailto:info@albaraka.org">info@albaraka.org</a></p>
+                        <p><a href="mailto:{{$contact->email}}">{{$contact->email}}</a></p>
                     </div>
                     <div class="footer-three__widget-alt">
                         <div class="footer-two__widget-intro">
                             <h6 class="title-animation">ساعات العمل</h6>
                         </div>
                         <div class="footer-three__widget-single">
-                            <p>8:30 صباحًا - 5:30 مساءً</p>
-                            <p>من الأحد إلى الخميس</p>
+                            <p>{{$contact->working_hours}}</p>
                         </div>
                     </div>
                 </div>
@@ -112,7 +120,7 @@
                             </div>
                             <div class="content">
                                 <p>العنوان</p>
-                                <p><a href="https://maps.app.goo.gl/X4z6dcMCiMqCfhwP8" target="_blank">تعاونية الصومام 2 مكرر- لاكوت, بئر مراد رايس, الجزائر العاصمة, الجزائر .</a></p>
+                                <p><a href="{{$contact->google_map}}" target="_blank">{{$contact->address}}</a></p>
                             </div>
                         </div>
                         <div class="single-address">
@@ -121,7 +129,8 @@
                             </div>
                             <div class="content">
                                 <p>الهاتف</p>
-                                <p><a href="tel:+213-797-69-10-31" style="direction: ltr">+213 797 69 10 31</a></p>
+                                <p><a href="tel:{{$contact->phone}}" style="direction: ltr">{{$contact->phone}}</a></p>
+                                <p><a href="tel:{{$contact->alt_phone}}" style="direction: ltr">{{$contact->alt_phone}}</a></p>
                             </div>
                         </div>
                         <div class="single-address">
@@ -130,7 +139,7 @@
                             </div>
                             <div class="content">
                                 <p>البريد الإلكتروني</p>
-                                <p><a href="mailto:contact@albaraka.org">contact@albaraka.org</a></p>
+                                <p><a href="mailto:{{$contact->email}}">{{$contact->email}}</a></p>
                             </div>
                         </div>
                     </div>
@@ -155,8 +164,8 @@
                             <div class="footer__newsletter-check">
                                 <div class="form-group">
                                     <input type="checkbox" id="acceptPolicy">
-                                    <label for="acceptPolicy" style="direction: rtl">أوافق على <a href="#">الشروط</a> و <a
-                                            href="#">السياسات</a></label>
+                                    <label for="acceptPolicy" style="direction: rtl">أوافق على <a href="#">الشروط</a> و
+                                        <a href="#">السياسات</a></label>
                                 </div>
                             </div>
                         </form>

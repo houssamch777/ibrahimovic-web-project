@@ -30,3 +30,6 @@
 
 <!-- main js -->
 <script src="assets/js/custom.js"></script>
+
+
+@yield('js')

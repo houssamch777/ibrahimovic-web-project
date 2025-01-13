@@ -8,7 +8,7 @@
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesdesign" name="author" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="assets/favicon.png">
+    <link rel="shortcut icon" href="{{asset('assets/favicon.png')}}">
 
     <!-- include head css -->
     @include('layouts.admin.head-css')
@@ -45,8 +45,7 @@
     </div>
     <!-- END layout-wrapper -->
 
-    <!-- customizer -->
-    @include('layouts.admin.right-sidebar')
+
 
     <!-- vendor-scripts -->
     @include('layouts.admin.vendor-scripts')
