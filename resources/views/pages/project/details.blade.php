@@ -1,4 +1,17 @@
 @extends('layouts.rtl.app')
+
+@section('pageTitle', $project->name)
+@section('pageDescription', Str::limit(strip_tags($project->description), 150))
+@section('pageKeywords', 'جمعية البركة الجزائرية, أخبار, مبادرات, دعم الشعوب المظلومة, العمل الخيري, الجزائر')
+@section('ogTitle', $project->name)
+@section('ogDescription', Str::limit(strip_tags($project->description), 150))
+@section('ogImage', asset('storage/' . $project->image_url))
+@section('ogUrl', route('projects.show', $project->id))
+@section('ogType', 'article')
+@section('twitterTitle', $project->title)
+@section('twitterDescription', Str::limit(strip_tags($project->description), 150))
+@section('twitterImage', asset('storage/' . $project->image_url))
+
 @section('css')
 <!-- plugin css -->
 @endsection

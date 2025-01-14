@@ -17,6 +17,7 @@ class HomeController extends Controller
         $Images = GalleryImage::get();
         $project = FeaturedProject::first();
         $contact = Contact::first();
+
         return view('welcome',compact('Images','project','contact'));
     }
     public function aboutCharity()

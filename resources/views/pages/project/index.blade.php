@@ -1,4 +1,17 @@
 @extends('layouts.rtl.app')
+@section('pageTitle', 'مشاريعنا | جمعية البركة الجزائرية لدعم الشعوب المظلومة')
+@section('pageDescription', 'تعرف على مشاريع جمعية البركة الجزائرية التي تهدف لدعم الشعوب المظلومة وتحقيق العدالة
+الاجتماعية.')
+@section('pageKeywords', 'جمعية البركة الجزائرية, المشاريع, دعم الشعوب المظلومة, التبرعات, الجزائر, المشاريع الإنسانية')
+@section('ogTitle', 'مشاريعنا | جمعية البركة الجزائرية لدعم الشعوب المظلومة')
+@section('ogDescription', 'اكتشف مشاريع جمعية البركة الجزائرية الموجهة لدعم الشعوب المظلومة وتعزيز العمل الإنساني.')
+@section('ogImage', asset('assets/projects_image.jpg'))
+@section('ogUrl', route('projects'))
+@section('ogType', 'article')
+@section('twitterTitle', 'مشاريعنا | جمعية البركة الجزائرية لدعم الشعوب المظلومة')
+@section('twitterDescription', 'اكتشف مشاريع جمعية البركة الجزائرية الموجهة لدعم الشعوب المظلومة وتعزيز العمل
+الإنساني.')
+@section('twitterImage', asset('assets/projects_image.jpg'))
 @section('css')
 <!-- plugin css -->
 <link href="build/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
