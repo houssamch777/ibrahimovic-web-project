@@ -5,7 +5,7 @@
             <div class="col-12 col-lg-3">
                 <div class="footer-three__logo" data-aos="fade-up" data-aos-duration="1000">
                     <a href="{{route('home')}}">
-                        <img src="assets/images/logo-light.png" alt="جمعية البركة">
+                        <img src="{{asset('assets/images/logo-light.png')}}" alt="جمعية البركة">
                     </a>
                 </div>
             </div>
@@ -81,7 +81,7 @@
                         <div class="footer-three__widget-news">
                             <div class="thumb">
                                 <a href="news-details.html">
-                                    <img src="assets/images/blog/ph-one.png" alt="الأخبار">
+                                    <img src="{{asset('assets/images/blog/ph-one.png')}}" alt="الأخبار">
                                 </a>
                             </div>
                             <div class="content">
@@ -94,7 +94,7 @@
                         <div class="footer-three__widget-news">
                             <div class="thumb">
                                 <a href="news-details.html">
-                                    <img src="assets/images/blog/ph-two.png" alt="الأخبار">
+                                    <img src="{{asset('assets/images/blog/ph-two.png')}}" alt="الأخبار">
                                 </a>
                             </div>
                             <div class="content">

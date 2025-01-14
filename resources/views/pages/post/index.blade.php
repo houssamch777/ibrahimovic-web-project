@@ -1,75 +1,70 @@
 @extends('layouts.rtl.app')
 @section('css')
 <!-- plugin css -->
+<link href="build/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
 @extends('section.partial.banner')
 @section('title')
-مشــــــاريعنا
+أخر الأخبار
 @endsection
 @section('secondtitle')
-ساهم في تنفيذ مشاريع الجمعية
+تعرف على جديد الجمعية
 @endsection
-<!-- ==== blog details section start ==== -->
+<!-- ==== cause slider section start ==== -->
+<!-- ==== blog section start ==== -->
         <section class="blog-main cm-details">
             <div class="container">
-                <div class="row gutter-60 mt-5">
+                <div class="row gutter-60">
                     <div class="col-12 col-xl-8">
-                        <div class="cm-details__content">
-                            <div class="cm-details__poster" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
-                                <img src="{{ asset('storage/' . $project->image_url) }}" alt="Image">
-                            </div>
-                            <div class="cm-details-meta">
-                                <p><i class="fa-solid fa-calendar-days"></i>{{ $project->created_at }}</p>
-                                <p><i class="fa-solid fa-location-dot"></i>{{ $project->location }}</p>
-                            </div>
-                            <div class="cm-group cta">
-                                <h3 class="title-animation">{{ $project->name }}</h3>
-                                <p>{{ $project->description }}</p>
-                            </div>
-
-
-                            <div class="cm-img-group cta">
-                                @foreach ($project->images as $image)
-                                    <div class="cm-img-single">
-                                        <img src="{{ asset('storage/' . $image) }}" alt="Image">
-                                    </div>
-                                @endforeach
-
-                            </div>
-                            <div class="details-footer cta">
-                                <div class="details-tag">
-                                    <div class="tag-header">
-                                        <h6>شارك المشروع:</h6>
-                                    </div>
-                                    <div class="social">
-                                        <!-- Facebook -->
-                                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}" target="_blank"
-                                            aria-label="share us on facebook" title="Facebook">
-                                            <i class="fa-brands fa-facebook-f"></i>
-                                        </a>
+                        <div>
                             
-                                        <!-- Telegram -->
-                                        <a href="https://t.me/share/url?url={{ urlencode(url()->current()) }}&text={{ urlencode($project->name) }}"
-                                            target="_blank" aria-label="share us on telegram" title="Telegram">
-                                            <i class="fa-brands fa-telegram"></i>
-                                        </a>
-                            
-                            
-                                        <!-- Twitter (X سابقًا) -->
-                                        <a href="https://twitter.com/intent/tweet?url={{ urlencode(url()->current()) }}&text={{ urlencode($project->name) }}"
-                                            target="_blank" aria-label="share us on twitter" title="Twitter">
-                                            <i class="fa-brands fa-twitter"></i>
-                                        </a>
-                                    </div>
-                                </div>
+                            @forelse($posts as $post)
+                                <x-post-component :post="$post" />
+                            @empty
+                            <div class="col-12">
+                                <p class="text-center text-muted">لا توجد منشورات لعرضها حاليًا.</p>
                             </div>
+                            @endforelse
+                        </div>
+                        <div class="pagination-wrapper" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
+                            <ul class="pagination main-pagination">
+                                <li>
+                                    <button>
+                                        <i class="fa-solid fa-angles-left"></i>
+                                    </button>
+                                </li>
+                                <li>
+                                    <a href="blog-list.html">1</a>
+                                </li>
+                                <li>
+                                    <a href="blog-list.html" class="active">2</a>
+                                </li>
+                                <li>
+                                    <a href="blog-list.html">3</a>
+                                </li>
+                                <li>
+                                    <button>
+                                        <i class="fa-solid fa-angles-right"></i>
+                                    </button>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                     <div class="col-12 col-xl-4">
                         <div class="blog-main__sidebar">
                             <div class="cm-details__sidebar">
+                                <div class="cm-sidebar-widget" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
+                                    <div class="intro">
+                                        <h5>search here</h5>
+                                    </div>
+                                    <form action="#" method="post">
+                                        <input type="text" name="search-product" id="searchProduct" placeholder="Search Here..."
+                                            required>
+                                        <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                                    </form>
+                                </div>
                                 <div class="cm-sidebar-widget" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
                                     <div class="intro">
                                         <h5>Recent Posts</h5>
@@ -123,9 +118,13 @@
                 </div>
             </div>
         </section>
-        <!-- ==== / blog details section end ==== -->
+        <!-- ==== / blog section end ==== -->
+
 @endsection
 
 @section('js')
+<script src="build/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="build/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js"></script>
+
 
 @endsection

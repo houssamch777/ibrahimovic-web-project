@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Contact;
 use App\Models\FeaturedProject;
 use App\Models\GalleryImage;
+use App\Models\Post;
 use App\Models\Project;
 use Illuminate\Http\Request;
 
@@ -51,5 +52,19 @@ class HomeController extends Controller
     {
         $contact = Contact::first();
         return view('pages.branches', compact('contact'));
+    }
+    public function posts()
+    {
+        $contact = Contact::first();
+        $posts = Post::paginate(6);
+        return view('pages.post.index', compact('contact','posts'));
+    }
+
+
+        public function postsDetails($id)
+    {
+        $post = Post::findOrFail($id);
+        $contact = Contact::first();
+        return view('pages.post.details', compact('contact','post'));
     }
 }

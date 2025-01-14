@@ -18,13 +18,13 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Baraka Admin',
-            'email' => 'houssamcheriet01@gmail.com',
-            'password' => Hash::make('hOussamch@1'), // كلمة المرور مشفرة
+            'name' => 'Amin rahmani',
+            'email' => 'barakadz.media@gmail.com',
+            'password' => Hash::make('Barakadz-Media@25'), // كلمة المرور مشفرة
             'role' => 'admin', // تحديد الدور كـ admin
             'is_active' => true, // جعل الحساب نشطًا
         ]);
-        FeaturedProject::create([
+        /*FeaturedProject::create([
             'title' => 'مشروع كفالة الأطفال الأيتام في غزة',
             'target_goal' => '10000 يتيم',
             'achieved_value' => '4632 يتيم',
@@ -33,5 +33,6 @@ class DatabaseSeeder extends Seeder
             'subtitle' => 'ابدأ بالمساهمة في دعم أطفال غزة',
             'description' => 'مشروع كفالة الأيتام في غزة هو مبادرة تهدف إلى توفير الدعم المالي والنفسي والاجتماعي للأطفال الأيتام، لضمان حياة كريمة ومستقبل مشرق لهم. هدفنا دعم 10,000 يتيم كمرحلة أولى أثناء الحرب.',
         ]);
+        */
     }
 }

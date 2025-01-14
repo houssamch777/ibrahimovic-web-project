@@ -9,13 +9,13 @@
         </div>
     </div>
     <div class="banner-bg">
-        <img src="assets/images/banner/banner-bg.png" alt="Image">
+        <img src="{{asset('assets/images/banner/banner-bg.png')}}" alt="Image">
     </div>
     <div class="shape">
-        <img src="assets/images/shape.png" alt="Image">
+        <img src="{{asset('assets/images/shape.png')}}" alt="Image">
     </div>
     <div class="sprade" data-aos="zoom-in" data-aos-duration="1000">
-        <img src="assets/images/sprade-base.png" alt="Image" class="base-img">
+        <img src="{{asset('assets/images/sprade-base.png')}}" alt="Image" class="base-img">
     </div>
 </section>
 <!-- ==== / banner section end ==== -->

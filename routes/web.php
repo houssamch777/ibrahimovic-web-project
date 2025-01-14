@@ -18,6 +18,9 @@ Route::get('/about-us', [HomeController::class, 'aboutCharity'])->name('about');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::get('/vision', [HomeController::class, 'vision'])->name('vision');
 Route::get('/branches', [HomeController::class, 'branches'])->name('branches');
+Route::get('/posts', [HomeController::class, 'posts'])->name('posts');
+Route::get('/posts/{id}', [HomeController::class, 'postsDetails'])->name('posts.show');
+
 Route::get('/our-projects', [HomeController::class, 'projects'])->name('projects');
 Route::get('/our-projects/{id}', [HomeController::class, 'projectDetails'])->name('projects.show');
 
@@ -43,7 +46,14 @@ Route::post('admin/profile', [AdminController::class, 'updateProfile'])->name('p
 Route::get('admin/branch', [BranchController::class, 'index'])->name('admin.branch.index')->middleware('auth');
 Route::get('admin/branch/create', [BranchController::class, 'create'])->name('admin.branch.create');
 
-
+Route::get('admin/post', [PostController::class, 'index'])->name('admin.posts.index')->middleware('auth');
+Route::get('admin/post/create-video', [PostController::class, 'createVideo'])->name('admin.posts.create-video')->middleware('auth');
+Route::get('admin/post/create-image', [PostController::class, 'createImage'])->name('admin.posts.create-image')->middleware('auth');
+Route::post('admin/post', [PostController::class, 'store'])->name('admin.posts.store')->middleware('auth');
+Route::get('admin/post/{post}', [PostController::class, 'show'])->name('admin.posts.show')->middleware('auth');
+Route::get('admin/post/{post}/edit', [PostController::class, 'edit'])->name('admin.posts.edit')->middleware('auth');
+Route::put('admin/post/{post}', [PostController::class, 'update'])->name('admin.posts.update')->middleware('auth');
+Route::delete('admin/post/{post}', [PostController::class, 'destroy'])->name('admin.posts.destroy')->middleware('auth');
 
 
 Route::post('/admin/contact', [SettingsController::class, 'updateContact'])->name('contact.update');

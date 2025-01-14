@@ -60,6 +60,18 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{route('admin.posts.index')}}" class="waves-effect">
+                        <i class="uim uim-web-grid"></i>
+                        <span>إدارة المحتوى</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="users" class="waves-effect">
+                        <i class="uim uim-entry"></i>
+                        <span>إدارة المستخدمين</span>
+                    </a>
+                </li>
+                <li>
                     <a href="donations" class="waves-effect">
                         <i class="uim uim-box"></i>
                         <span>إدارة التبرعات</span>
@@ -73,19 +85,9 @@
                     </a>
                 </li>
 
-                <li>
-                    <a href="users" class="waves-effect">
-                        <i class="uim uim-entry"></i>
-                        <span>إدارة المستخدمين</span>
-                    </a>
-                </li>
+                
 
-                <li>
-                    <a href="content-management" class="waves-effect">
-                        <i class="uim uim-web-grid"></i>
-                        <span>إدارة المحتوى</span>
-                    </a>
-                </li>
+                
 
                 <li>
                     <a href="reports" class="waves-effect">

@@ -67,7 +67,7 @@
                     <nav class="navbar p-0">
                         <div class="navbar-logo">
                             <a href="{{route('home')}}">
-                                <img src="assets/images/logo.png" alt="Image">
+                                <img src="{{asset('assets/images/logo.png')}}" alt="Image">
                             </a>
                         </div>
                         <div class="navbar__menu d-none d-xl-block">
@@ -116,7 +116,7 @@
                                         class="navbar__dropdown-label dropdown-label-alter">المركز الإعلامي</a>
                                     <ul class="navbar__sub-menu">
                                         <li>
-                                            <a href="#">أخر الأخبار</a>
+                                            <a href="{{route('posts')}}">أخر الأخبار</a>
                                         </li>
                                         <li>
                                             <a href="#">معرض الصور</a>
@@ -168,7 +168,7 @@
         <div class="mobile-menu__header nav-fade">
             <div class="logo">
                 <a href="{{route('home')}}" aria-label="home page" title="logo">
-                    <img src="assets/images/logo.png" alt="Image">
+                    <img src="{{asset('assets/images/logo.png')}}" alt="Image">
                 </a>
             </div>
             <button aria-label="close mobile menu" class="close-mobile-menu">
@@ -215,7 +215,7 @@
     <div class="off-canvas__inner">
         <div class="off-canvas__head">
             <a href="{{route('home')}}">
-                <img src="assets/images/logo.png" alt="Logo">
+                <img src="{{asset('assets/images/logo.png')}}" alt="Logo">
             </a>
             <button aria-label="close off canvas" class="off-canvas-close">
                 <i class="fa-solid fa-xmark"></i>

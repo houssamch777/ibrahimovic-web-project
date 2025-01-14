@@ -40,8 +40,8 @@
 <meta name="twitter:image" content="{{ asset('logo.jpg') }}">
 
 <!-- Favicon -->
-<link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon.png">
-<link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="{{asset('assets/images/favicon.png')}}">
+<link rel="icon" type="image/png" sizes="16x16" href="{{asset('assets/images/favicon.png')}}">
 
 <!-- Structured Data (JSON-LD) -->
 <script type="application/ld+json">
