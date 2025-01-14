@@ -6,10 +6,10 @@
 @section('content')
 @extends('section.partial.banner')
 @section('title')
-مشــــــاريعنا
+أخر الأخبار
 @endsection
 @section('secondtitle')
-ساهم في تنفيذ مشاريع الجمعية
+تعرف على جديد الجمعية
 @endsection
 <!-- ==== blog details section start ==== -->
 <section class="blog-main cm-details">
