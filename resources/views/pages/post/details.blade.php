@@ -18,26 +18,35 @@
             <div class="col-12 col-xl-8">
                 <div class="cm-details__content">
                     <div class="cm-details__poster" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
+                        @if ($post->type=='image')
                         <img src="{{ asset('storage/' . $post->image) }}" alt="Image">
+                        @else
+                        <iframe id="preview-video" src="{{$post->video_url}}" frameborder="0" allowfullscreen></iframe>
+                        @endif
+
                     </div>
                     <div class="cm-details-meta">
                         <p><i class="fa-solid fa-calendar-days"></i>{{ $post->created_at }}</p>
-                        <p><i class="fa-solid fa-location-dot"></i>{{ $post->location }}</p>
+                        <p><i class="fa-regular fa-user"></i>{{ $post->creator->name }}</p>
                     </div>
                     <div class="cm-group cta">
-                        <h3 class="title-animation">{{ $post->title }}</h3>
+                        <h3 class="title-animation" >{{ $post->title }}</h3>
                         <p>
-                            <p  class="my-4" style="white-space: pre-wrap;word-wrap: break-word;">{{ $post->description }}
-                                                    </p></p>
+                        <p class="my-4" style="white-space: pre-wrap;word-wrap: break-word;">{{ $post->description }}
+                        </p>
+                        </p>
                     </div>
 
 
                     <div class="cm-img-group cta">
-                       @foreach ($post->images as $imageUrl)
-                    <div class="cm-img-single">
-                        <img src="{{ asset('storage/' . $imageUrl) }}" alt="Image">
-                    </div>
-                    @endforeach
+                        @if ($post->images)
+                        @foreach ($post->images as $imageUrl)
+                        <div class="cm-img-single">
+                            <img src="{{ asset('storage/' . $imageUrl) }}" alt="Image">
+                        </div>
+                        @endforeach
+                        @endif
+
 
                     </div>
                     <div class="details-footer cta">
