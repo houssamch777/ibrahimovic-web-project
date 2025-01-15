@@ -60,7 +60,7 @@ $videoId = $matches[1] ?? null;
 
                     </div>
                     <div class="cm-details-meta">
-                        <p><i class="fa-solid fa-calendar-days"></i>{{ $post->created_at }}</p>
+                        <p><i class="fa-solid fa-calendar-days"></i>{{ $post->created_at->diffForHumans() }}</p>
                         <p><i class="fa-regular fa-user"></i>{{ $post->creator->name }}</p>
                     </div>
                     <div class="cm-group cta">

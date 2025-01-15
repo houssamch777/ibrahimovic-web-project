@@ -8,13 +8,13 @@
 @section('ogTitle', 'من نحن | جمعية البركة الجزائرية لدعم الشعوب المظلومة')
 @section('ogDescription', 'جمعية البركة الجزائرية تهدف إلى تقديم الدعم والمساندة للشعوب المظلومة عبر مشاريع إنسانية
 وخيرية.')
-@section('ogImage', asset('assets/about_image.jpg'))
+@section('ogImage', asset('assets/10-years-logo.jpg'))
 @section('ogUrl', route('about'))
 @section('ogType', 'article')
 @section('twitterTitle', 'من نحن | جمعية البركة الجزائرية لدعم الشعوب المظلومة')
 @section('twitterDescription', 'جمعية البركة الجزائرية تهدف إلى تقديم الدعم والمساندة للشعوب المظلومة عبر مشاريع إنسانية
 وخيرية.')
-@section('twitterImage', asset('assets/about_image.jpg'))
+@section('twitterImage', asset('assets/10-years-logo.jpg'))
 
 
 

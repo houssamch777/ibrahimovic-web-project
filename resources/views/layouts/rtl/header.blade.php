@@ -86,7 +86,7 @@
                                             <a href="{{route('vision')}}">الرؤية والرسالة</a>
                                         </li>
                                         <li>
-                                            <a href="#">رئيس الجمعية</a>
+                                            <a href="{{route('president')}}">رئيس الجمعية</a>
                                         </li>
                                         <li>
                                             <a href="#">فريق العمل</a>

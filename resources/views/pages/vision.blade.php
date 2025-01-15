@@ -5,12 +5,12 @@
 @section('pageKeywords', 'جمعية البركة الجزائرية, الرؤية, دعم الشعوب المظلومة, العمل الخيري, التبرعات')
 @section('ogTitle', 'رؤيتنا | جمعية البركة الجزائرية لدعم الشعوب المظلومة')
 @section('ogDescription', 'رؤيتنا تهدف إلى تقديم الدعم والمساندة للمحتاجين والشعوب المظلومة لتحقيق مستقبل مشرق.')
-@section('ogImage', asset('assets/vision_image.jpg'))
+@section('ogImage', asset('assets/10-years-logo.jpg'))
 @section('ogUrl', route('vision'))
 @section('ogType', 'article')
 @section('twitterTitle', 'رؤيتنا | جمعية البركة الجزائرية لدعم الشعوب المظلومة')
 @section('twitterDescription', 'رؤيتنا تهدف إلى تقديم الدعم والمساندة للمحتاجين والشعوب المظلومة لتحقيق مستقبل مشرق.')
-@section('twitterImage', asset('assets/vision_image.jpg'))
+@section('twitterImage', asset('assets/10-years-logo.jpg'))
 
 
 

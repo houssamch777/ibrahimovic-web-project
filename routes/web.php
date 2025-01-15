@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\BranchController;
 use App\Http\Controllers\admin\PostController;
+use App\Http\Controllers\admin\PresidentController;
 use App\Http\Controllers\admin\ProjectController;
 use App\Http\Controllers\admin\SettingsController;
 use App\Http\Controllers\HomeController;
@@ -15,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home')->middleware(\App\Http\Middleware\LogVisitor::class );
 Route::get('/about-us', [HomeController::class, 'aboutCharity'])->name('about');
+Route::get('/president', [HomeController::class, 'president'])->name('president');
+
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::get('/vision', [HomeController::class, 'vision'])->name('vision');
 Route::get('/branches', [HomeController::class, 'branches'])->name('branches');
@@ -23,6 +26,7 @@ Route::get('/posts/{id}', [HomeController::class, 'postsDetails'])->name('posts.
 
 Route::get('/our-projects', [HomeController::class, 'projects'])->name('projects');
 Route::get('/our-projects/{id}', [HomeController::class, 'projectDetails'])->name('projects.show');
+
 
 
 Route::get('/admin', [AdminController::class, 'index'])->name('admin')->middleware('auth');
@@ -42,6 +46,8 @@ Route::put('admin/project/{project}', [ProjectController::class, 'update'])->nam
 Route::delete('admin/project/{project}', [ProjectController::class, 'destroy'])->name('admin.projects.destroy')->middleware('auth');
 Route::post('admin/profile', [AdminController::class, 'updateProfile'])->name('profile.update');
 
+Route::get('admin/president', [PresidentController::class, 'edit'])->name('admin.president.edit');
+Route::post('admin/president', [PresidentController::class, 'update'])->name('admin.president.update');
 
 Route::get('admin/branch', [BranchController::class, 'index'])->name('admin.branch.index')->middleware('auth');
 Route::get('admin/branch/create', [BranchController::class, 'create'])->name('admin.branch.create');

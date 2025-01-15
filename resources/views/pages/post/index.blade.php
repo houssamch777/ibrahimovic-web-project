@@ -4,13 +4,13 @@
 @section('pageKeywords', 'جمعية البركة الجزائرية, أخبار, مبادرات, دعم الشعوب المظلومة, العمل الخيري, الجزائر')
 @section('ogTitle', 'أخبارنا | جمعية البركة الجزائرية لدعم الشعوب المظلومة')
 @section('ogDescription', 'تابع أخبار جمعية البركة الجزائرية وآخر المبادرات الإنسانية والمشاريع لدعم الشعوب المظلومة.')
-@section('ogImage', asset('assets/posts_image.jpg'))
+@section('ogImage', asset('assets/10-years-logo.jpg'))
 @section('ogUrl', route('posts'))
 @section('ogType', 'article')
 @section('twitterTitle', 'أخبارنا | جمعية البركة الجزائرية لدعم الشعوب المظلومة')
 @section('twitterDescription', 'تابع أخبار جمعية البركة الجزائرية وآخر المبادرات الإنسانية والمشاريع لدعم الشعوب
 المظلومة.')
-@section('twitterImage', asset('assets/posts_image.jpg'))
+@section('twitterImage', asset('assets/10-years-logo.jpg'))
 @section('css')
 <!-- plugin css -->
 <link href="build/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />

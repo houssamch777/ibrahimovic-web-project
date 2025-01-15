@@ -60,6 +60,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{route('admin.president.edit')}}" class="waves-effect">
+                        <i class="uim uim-apps"></i>
+                        <span>إدارة الجمعية</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{{route('admin.posts.index')}}" class="waves-effect">
                         <i class="uim uim-web-grid"></i>
                         <span>إدارة المحتوى</span>

@@ -6,6 +6,7 @@ use App\Models\Contact;
 use App\Models\FeaturedProject;
 use App\Models\GalleryImage;
 use App\Models\Post;
+use App\Models\President;
 use App\Models\Project;
 use Illuminate\Http\Request;
 
@@ -32,6 +33,12 @@ class HomeController extends Controller
     public function vision(){
         $contact = Contact::first();
         return view('pages.vision',compact('contact'));
+    }
+    public function president()
+    {
+        $contact = Contact::first();
+        $president = President::first();
+        return view('pages.president', compact('contact','president'));
     }
 
     public function projects(){
