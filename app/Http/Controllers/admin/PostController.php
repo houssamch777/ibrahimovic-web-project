@@ -38,8 +38,8 @@ class PostController extends Controller
             'description' => 'nullable|string',
             'type' => 'required|in:video,image',
             'video_url' => 'required_if:type,video|url',
-            'image' => 'required_if:type,image|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'required_if:type,image|image|mimes:jpeg,png,jpg,gif',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif',
         ];
 
         // الرسائل

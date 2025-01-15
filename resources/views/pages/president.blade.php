@@ -112,7 +112,7 @@
                     <div class="col-12">
                         <div class="about-me" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
                             <h4 class="title-animation">كلمة الرئيس</h4>
-                            <p>{{ $president->speech }}</p>
+                            <p class="text-center p-2" style="white-space: pre-wrap;word-wrap: break-word;">{{ $president->speech }}</p>
                         </div>
                     </div>
                 </div>

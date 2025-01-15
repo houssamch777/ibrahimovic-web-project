@@ -17,12 +17,12 @@
     @section('content')
     <!--  Start your content -->
     <!--  Start your content -->
-        <form action="{{ route('admin.president.update') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="row">
-                @if(session('success'))
-                <div class="alert alert-success">{{ session('success') }}</div>
-                @endif
+    <form action="{{ route('admin.president.update') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="row">
+            @if(session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+            @endif
             <div class="col-xl-7">
                 <div class="card">
                     <div class="card-header border-0 align-items-center d-flex pb-0">
@@ -33,7 +33,8 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="name" class="form-label">اسم الرئيس</label>
-                                    <input type="text" class="form-control" id="name" name="name" value="{{ $president->name ?? '' }}" required>
+                                    <input type="text" class="form-control" id="name" name="name"
+                                        value="{{ $president->name ?? '' }}" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="designation" class="form-label">المنصب</label>
@@ -49,7 +50,8 @@
                                     <label for="image" class="form-label">صورة الرئيس</label>
                                     <input type="file" class="form-control" id="image" name="image">
                                     @if($president->image)
-                                    <img src="{{ Storage::url($president->image) }}" alt="صورة الرئيس" class="img-thumbnail mt-2" width="150">
+                                    <img src="{{ Storage::url($president->image) }}" alt="صورة الرئيس"
+                                        class="img-thumbnail mt-2" width="150">
                                     @endif
                                 </div>
                                 <!-- روابط الشبكات الاجتماعية -->
@@ -59,14 +61,15 @@
                                         @if (!empty($president->social_links))
                                         @foreach ($president->social_links as $platform => $link)
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            <input type="text" name="social_links[{{ $platform }}]" value="{{ $link }}" class="form-control"
-                                                placeholder="رابط المنصة">
+                                            <input type="text" name="social_links[{{ $platform }}]" value="{{ $link }}"
+                                                class="form-control" placeholder="رابط المنصة">
                                             <button type="button" class="btn btn-danger btn-sm remove-item">حذف</button>
                                         </li>
                                         @endforeach
                                         @endif
                                     </ul>
-                                    <button type="button" id="add-social-link" class="btn btn-success btn-sm">إضافة رابط</button>
+                                    <button type="button" id="add-social-link" class="btn btn-success btn-sm">إضافة
+                                        رابط</button>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -77,17 +80,20 @@
                                         @if (!empty($president->achievements))
                                         @foreach ($president->achievements as $achievement)
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            <input type="text" name="achievements[]" value="{{ $achievement }}" class="form-control me-2">
-                                            <button type="button" class="btn btn-danger btn-sm remove-item me-2">حذف</button>
+                                            <input type="text" name="achievements[]" value="{{ $achievement }}"
+                                                class="form-control me-2">
+                                            <button type="button"
+                                                class="btn btn-danger btn-sm remove-item me-2">حذف</button>
                                         </li>
                                         @endforeach
                                         @endif
                                     </ul>
-                                    <button type="button" id="add-achievement" class="btn btn-success btn-sm">إضافة إنجاز</button>
+                                    <button type="button" id="add-achievement" class="btn btn-success btn-sm">إضافة
+                                        إنجاز</button>
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -99,16 +105,19 @@
                     <div class="card-body">
                         <!-- كلمة الرئيس -->
                         <div class="mb-3">
-                            <label for="speech" class="form-label">كلمة الرئيس</label>
-                            <textarea class="form-control me-2" id="speech" name="speech" rows="8">{{ $president->speech ?? '' }}</textarea>
+                            <textarea class="form-control me-2" id="speech" name="speech"
+                                rows="33">{{ $president->speech ?? '' }}</textarea>
+                        </div>
+                        <div class="text-end mb-2">
+                            <button type="submit" class="btn btn-success waves-effect waves-light">
+                                <i class="mdi mdi-arrow-left ms-1"></i> تحديث
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
-            
-        
         </div>
-        </form>
+    </form>
 
 
     @endsection

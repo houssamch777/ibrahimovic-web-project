@@ -60,7 +60,7 @@
                             <!-- الصور -->
                             <div class="mb-3">
                                 <label for="images" class="form-label">صور المنشور</label>
-                                <input type="file" name="images[]" id="images" class="form-control" multiple required>
+                                <input type="file" name="images[]" id="images" class="form-control" multiple >
                                 <small class="text-muted">يمكنك اختيار عدة صور.</small>
                             </div>
 
