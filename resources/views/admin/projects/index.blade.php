@@ -12,6 +12,18 @@
     @section('content')
     <!--  Start your content -->
     <div class="row">
+        @if ($errors->any())
+        <div class="alert alert-danger">
+            <h5>حدثت الأخطاء التالية:</h5>
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+    </div>
+    <div class="row">
         <div class="col-xl-3">
             <div class="card filemanager-sidebar">
                 <div class="card-body">

@@ -64,7 +64,7 @@ $videoId = $matches[1] ?? null;
                         <p><i class="fa-regular fa-user"></i>{{ $post->creator->name }}</p>
                     </div>
                     <div class="cm-group cta">
-                        <h3 class="title-animation" >{{ $post->title }}</h3>
+                        <h3 class="title-animation" style="direction: rtl;text-align: right">{{ $post->title }}</h3>
                         <p>
                         <p class="my-4" style="white-space: pre-wrap;word-wrap: break-word;">{{ $post->description }}
                         </p>
@@ -117,49 +117,39 @@ $videoId = $matches[1] ?? null;
                     <div class="cm-details__sidebar">
                         <div class="cm-sidebar-widget" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
                             <div class="intro">
-                                <h5>Recent Posts</h5>
+                                <h5>أخر الأخبار</h5>
                             </div>
                             <div class="cm-sidebar-post">
-                                <div class="single-item">
-                                    <div class="thumb">
-                                        <a href="blog-details.html">
-                                            <img src="assets/images/blog/ph-one.png" alt="Image">
-                                        </a>
+                                @foreach ($recentPosts as $post)
+                                    <div class="single-item">
+                                        <div class="thumb">
+                                            <a href="{{ route('posts.show', ['id'=>$post->id]) }}">
+                                                @if ($post->type=='image')
+                                                
+                                                <img src="{{ asset('storage/' . $post->image) }}" alt="Image">
+                                                @else
+                                                @php
+                                                // Extract YouTube video ID from the URL using regex
+                                                preg_match('/(?:https?:\/\/(?:www\.)?youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/)([a-zA-Z0-9_-]{11}))/i',
+                                                $post->video_url, $matches);
+                                                preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/
+                                                ]{11})%i',$post->video_url, $matches);
+                                                
+                                                $videoId = $matches[1] ?? null;
+                                                
+                                                @endphp
+                                                <img src="https://img.youtube.com/vi/{{ $videoId }}/maxresdefault.jpg" alt="Image">
+                                                @endif
+                                            </a>
+                                        </div>
+                                        <div class="content">
+                                            <p><i class="fa-solid fa-calendar-days"></i> <span>{{ $post->created_at->diffForHumans() }}</span>
+                                            </p>
+                                            <p><a href="{{ route('posts.show', ['id'=>$post->id]) }}">{{ $post->title}}</a>
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div class="content">
-                                        <p><i class="fa-solid fa-calendar-days"></i> <span>November 19, 2024</span>
-                                        </p>
-                                        <p><a href="blog-details.html">Where Innovation Meets Foundation</a>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="single-item">
-                                    <div class="thumb">
-                                        <a href="blog-details.html">
-                                            <img src="assets/images/blog/ph-two.png" alt="Image">
-                                        </a>
-                                    </div>
-                                    <div class="content">
-                                        <p><i class="fa-solid fa-calendar-days"></i> <span>November 19, 2024</span>
-                                        </p>
-                                        <p><a href="blog-details.html">Where Innovation Meets Foundation</a>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="single-item">
-                                    <div class="thumb">
-                                        <a href="blog-details.html">
-                                            <img src="assets/images/blog/three.png" alt="Image">
-                                        </a>
-                                    </div>
-                                    <div class="content">
-                                        <p><i class="fa-solid fa-calendar-days"></i> <span>November 22, 2024</span>
-                                        </p>
-                                        <p><a href="blog-details.html">Structures That Stand,
-                                                Dreams That Soar</a>
-                                        </p>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>

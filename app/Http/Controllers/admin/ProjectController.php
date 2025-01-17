@@ -72,9 +72,9 @@ class ProjectController extends Controller
             'location' => 'nullable|string|max:255',
             'end_date' => 'nullable|date',
             'is_featured' => 'required|boolean',
-            'main-image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'main-image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
             'images' => 'nullable|array',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
         
 

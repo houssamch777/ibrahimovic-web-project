@@ -9,6 +9,7 @@ use App\Models\Post;
 use App\Models\President;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -43,11 +44,16 @@ class HomeController extends Controller
 
     public function projects(){
         $contact = Contact::first();
-        $projects = Project::paginate(6);
-        $categories = Project::select('category', \DB::raw('COUNT(*) as count'))
+        $projects = Project::orderBy('created_at', 'desc')->paginate(4);
+
+        $categories = Project::select('category', DB::raw('COUNT(*) as count'))
             ->groupBy('category')
-            ->get();
-        return view('pages.project.index', compact('contact','projects','categories'));
+            ->limit(3)->get();
+        $locations = Project::select('location', DB::raw('COUNT(*) as count'))
+            ->groupBy('location')
+            ->limit(3)->get();
+        $recentPosts = Post::orderBy('created_at', 'desc')->take(3)->get();
+        return view('pages.project.index', compact('contact','projects','categories','locations','recentPosts'));
     }
     public function projectDetails($id)
     {
@@ -64,15 +70,25 @@ class HomeController extends Controller
     public function posts()
     {
         $contact = Contact::first();
-        $posts = Post::paginate(6);
-        return view('pages.post.index', compact('contact','posts'));
+        $recentPosts = Post::orderBy('created_at', 'desc')->take(3)->get();
+        $posts = Post::orderBy('created_at', 'desc')->paginate(4);
+        return view('pages.post.index', compact('contact','posts', 'recentPosts'));
     }
 
 
         public function postsDetails($id)
     {
         $post = Post::findOrFail($id);
+        $recentPosts = Post::orderBy('created_at', 'desc')->take(3)->get();
         $contact = Contact::first();
-        return view('pages.post.details', compact('contact','post'));
+        return view('pages.post.details', compact('contact','post','recentPosts'));
     }
+
+
+
+    public function familypledge()
+{
+
+    
+}
 }

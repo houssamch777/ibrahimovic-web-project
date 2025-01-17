@@ -2,11 +2,15 @@
 
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\BranchController;
+use App\Http\Controllers\admin\PledgeController;
 use App\Http\Controllers\admin\PostController;
 use App\Http\Controllers\admin\PresidentController;
 use App\Http\Controllers\admin\ProjectController;
 use App\Http\Controllers\admin\SettingsController;
+use App\Http\Controllers\DonationController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -15,25 +19,34 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home')->middleware(\App\Http\Middleware\LogVisitor::class );
-Route::get('/about-us', [HomeController::class, 'aboutCharity'])->name('about');
-Route::get('/president', [HomeController::class, 'president'])->name('president');
-
-Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
-Route::get('/vision', [HomeController::class, 'vision'])->name('vision');
-Route::get('/branches', [HomeController::class, 'branches'])->name('branches');
-Route::get('/posts', [HomeController::class, 'posts'])->name('posts');
-Route::get('/posts/{id}', [HomeController::class, 'postsDetails'])->name('posts.show');
-
-Route::get('/our-projects', [HomeController::class, 'projects'])->name('projects');
-Route::get('/our-projects/{id}', [HomeController::class, 'projectDetails'])->name('projects.show');
+Route::get('about-us', [HomeController::class, 'aboutCharity'])->name('about');
+Route::get('president', [HomeController::class, 'president'])->name('president');
+Route::get('donation', [DonationController::class, 'index'])->name('donation.index');
 
 
 
-Route::get('/admin', [AdminController::class, 'index'])->name('admin')->middleware('auth');
-Route::get('/settings', [SettingsController::class, 'index'])->name('settings')->middleware('auth');
-Route::post('/admin/gallery', [SettingsController::class, 'galleryStore'])->name('gallery')->middleware('auth');
-Route::post('/admin/featured-project', [SettingsController::class, 'updateProject'])->name('featured-project.update');
-Route::delete('/admin/gallery/{id}', [SettingsController::class, 'galleryDestroy'])->name('gallery.destroy')->middleware('auth');
+
+
+Route::get('contact', [HomeController::class, 'contact'])->name('contact');
+Route::get('vision', [HomeController::class, 'vision'])->name('vision');
+Route::get('branches', [HomeController::class, 'branches'])->name('branches');
+Route::get('posts', [HomeController::class, 'posts'])->name('posts');
+Route::get('posts/{id}', [HomeController::class, 'postsDetails'])->name('posts.show');
+Route::get('familypledge', [HomeController::class, 'familypledge'])->name('familypledge');
+
+Route::get('test', [TestController::class, 'index'])->name('test');
+Route::get('search/post',[SearchController::class,'post'])->name('posts.search');
+Route::get('our-projects', [HomeController::class, 'projects'])->name('projects');
+Route::get('our-projects/{id}', [HomeController::class, 'projectDetails'])->name('projects.show');
+
+
+Route::get('/family-pledge', [PledgeController::class, 'index'])->name('family.pledge');
+
+Route::get('admin', [AdminController::class, 'index'])->name('admin')->middleware('auth');
+Route::get('settings', [SettingsController::class, 'index'])->name('settings')->middleware('auth');
+Route::post('admin/gallery', [SettingsController::class, 'galleryStore'])->name('gallery')->middleware('auth');
+Route::post('admin/featured-project', [SettingsController::class, 'updateProject'])->name('featured-project.update');
+Route::delete('admin/gallery/{id}', [SettingsController::class, 'galleryDestroy'])->name('gallery.destroy')->middleware('auth');
 
 
 
@@ -61,8 +74,7 @@ Route::get('admin/post/{post}/edit', [PostController::class, 'edit'])->name('adm
 Route::put('admin/post/{post}', [PostController::class, 'update'])->name('admin.posts.update')->middleware('auth');
 Route::delete('admin/post/{post}', [PostController::class, 'destroy'])->name('admin.posts.destroy')->middleware('auth');
 
-
-Route::post('/admin/contact', [SettingsController::class, 'updateContact'])->name('contact.update');
+Route::post('admin/contact', [SettingsController::class, 'updateContact'])->name('contact.update');
 
 
 Auth::routes();
@@ -70,7 +82,7 @@ Auth::routes();
 
 
 // Artisan Command Route (for development or maintenance)
-Route::get('/foo', function () {
+Route::get('foo', function () {
     Artisan::call('cache:clear');
     Artisan::call('config:clear');
     Artisan::call('route:clear');

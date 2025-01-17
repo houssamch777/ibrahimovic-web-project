@@ -30,10 +30,10 @@
     <div class="blog__single-inner">
         <div class="blog__single-meta">
             <p><i class="icon-user"></i>{{ $post->creator->name ?? 'مستخدم مجهول' }}</p>
-            <p><i class="icon-calendar"></i>{{ $post->created_at}}</p>
+            <p><i class="icon-calendar"></i>{{ $post->created_at->diffForHumans() }}</p>
         </div>
         <div class="blog__single-content">
-            <h4><a href="{{ route('posts.show', ['id'=>$post->id]) }}">{{ $post->title }}</a></h4>
+            <h4><a href="{{ route('posts.show', ['id'=>$post->id]) }}" style="direction: rtl;text-align: right">{{ $post->title }}</a></h4>
             <p>{{ \Illuminate\Support\Str::limit($post->description, 120, '...') }}</p>
         </div>
         <div class="blog__single-cta">

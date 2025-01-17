@@ -104,10 +104,7 @@
                                             <a href="{{route('projects')}}">مشاريعنا</a>
                                         </li>
                                         <li>
-                                            <a href="#">مناشدات</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">ميثاق العائلة الجزائرية</a>
+                                            <a href="{{route('family.pledge')}}">ميثاق العائلة الجزائرية</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -131,7 +128,7 @@
                                 </li>
 
                                 <li class="navbar__item nav-fade">
-                                    <a href="#" class="navbar__link">الحسابات البنكية</a>
+                                    <a href="" class="navbar__link">تطوع معنا</a>
                                 </li>
                                 <li class="navbar__item nav-fade">
                                     <a href="{{ route('contact') }}" class="navbar__link">اتصل بنا</a>
@@ -145,8 +142,8 @@
                                         <option data-flag="fi-dz">العربية</option>
                                     </select>
                                 </div>
-                                <a href="donate-us.html" class="btn--primary d-none d-md-flex">بوابة التطوع <i
-                                        class="fa-solid fa-arrow-right"></i></a>
+                                <a href="{{ route('donation.index') }}" class="btn--primary d-none d-md-flex">تبرع الآن <i
+                                        class="fa-solid fa-arrow-left"></i></a>
                             </div>
                             <button class="open-offcanvas-nav d-flex d-xl-none" aria-label="toggle mobile menu"
                                 title="open offcanvas menu">
