@@ -10,7 +10,7 @@
 المساعدات الإنسانية وتنفيذ المشاريع الخيرية.')
 @section('ogImage', asset('images/10-years-logo.jpg'))
 <!-- استبدل 'donation-banner.jpg' بمسار صورة صفحة التبرع -->
-@section('ogUrl', route('donation'))
+@section('ogUrl', route('donation.index'))
 <!-- استبدل 'donation' بمسار صفحة التبرع -->
 @section('ogType', 'article')
 @section('twitterTitle', 'تبرع لجمعية البركة الجزائرية | دعم الشعوب المظلومة')
