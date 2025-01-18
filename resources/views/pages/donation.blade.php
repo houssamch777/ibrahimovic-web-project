@@ -43,13 +43,19 @@
                                     <p>يمكنكم المساهمة في مشاريعنا ودعم جهودنا في مساعدة المحتاجين عبر إحدى الطرق التالية:</p>
                                     <ul>
                                         <li class="mb-2">
-                                            <strong>التبرع النقدي المباشر:</strong>
+                                            <strong class="text-success fs-3 fw-bolder mb-4">التبرع النقدي المباشر:</strong>
                                             <br>
                                             يمكنكم زيارة  <a href="{{route('branches')}}" class="text-success"><strong> مكاتب الجمعية </strong></a> المتواجدة في مختلف الولايات لتقديم تبرعاتكم النقدية مباشرة.
                                         </li>
                                         <li class="mb-2">
-                                            <strong>عبر مكاتب البريد الجزائري:</strong>
+                                            <strong class="text-success fs-3 fw-bolder mb-4">عبر الموقع الإلكتروني:</strong>
                                             <br>
+                                            يمكنكم التبرع بسهولة وأمان عبر بوابتنا الإلكترونية باستخدام بطاقة الدفع.
+                                            <a href="#donate" class="text-success"><strong>في الأسفل</strong></a>
+                                        </li>
+                                        <li class="mb-2">
+                                            <strong class="text-success fs-3 fw-bolder mb-4">عبر مكاتب البريد الجزائري:</strong>
+                                            <br class="mb-1">
                                             يمكنكم إيداع تبرعاتكم في حساب الجمعية عبر مكاتب البريد.
                                             <br>
                                             <strong>CCP</strong> : 210 243 29 <strong>Cle</strong> 40
@@ -61,27 +67,22 @@
                                             <span class="text-danger">ملاحظة لا يمكن التبرع عبر تطبيق بريدي موب</span>
                                         </li>
                                         <li class="mb-2">
-                                            <strong>التحويلات البنكية:</strong>
+                                            <strong class="text-success fs-3 fw-bolder mb-4">التحويلات البنكية:</strong>
                                             <br>
                                             بإمكانكم تحويل تبرعاتكم عبر بنك القرض الشعبي.
                                             <br>
                                             <strong>CPA</strong> : 004 001 854 100 009 720 30
                                         </li>
-                                        <li class="mb-2">
-                                            <strong>عبر الموقع الإلكتروني:</strong>
-                                            <br>
-                                            يمكنكم التبرع بسهولة وأمان عبر بوابتنا الإلكترونية باستخدام بطاقة الدفع.
-                                             <a href="#donate" class="text-success"><strong>في الأسفل</strong></a>
-                                        </li>
+                                        
                                     </ul>
                                     <div class="contact mt-4">                                      
-                                        <p>معًا نُحدث فرقًا ونزرع الأمل في قلوب المحتاجين.</p>
+                                        <p></p>
                                     </div>
                                 </div>
                                 <div class="cta">
                                     <div class="community-donation" id="donate">
                                         <div class="community-donation__inner mt-5">
-                                            <h5 class="mt-4">تبرع للفئات الأشد احتياجاً بسهولة وأمان وموثوقية.</h5>
+                                            <h5 class="mt-4">معًا نُحدث فرقًا ونزرع الأمل في قلوب المحتاجين.</h5>
                                             <div class="warning">
                                                 <div class="line"><i class="fa-solid fa-triangle-exclamation"></i></div>
                                                 <p><strong>ملاحظة:</strong> الصفحة قيد التطوير ولم يتم ربط نظام التبرع الإلكتروني بعد.

@@ -19,27 +19,39 @@ class HomeController extends Controller
         $Images = GalleryImage::get();
         $project = FeaturedProject::first();
         $contact = Contact::first();
+        $footerRecentPosts = Post::orderBy('created_at', 'desc')->take(2)->get();
 
-        return view('welcome',compact('Images','project','contact'));
+
+        return view('welcome',compact('Images','project','contact','footerRecentPosts'));
     }
     public function aboutCharity()
     {
         $contact = Contact::first();
-        return view('pages.about-us',compact('contact'));
+        $footerRecentPosts = Post::orderBy('created_at', 'desc')->take(2)->get();
+
+        return view('pages.about-us',compact('contact', 'footerRecentPosts'));
     }
     public function contact(){
         $contact = Contact::first();
-        return view('pages.contact',compact('contact'));
+        $footerRecentPosts = Post::orderBy('created_at', 'desc')->take(2)->get();
+
+        $footerRecentPosts = Post::orderBy('created_at', 'desc')->take(2)->get();
+
+        return view('pages.contact',compact('contact', 'footerRecentPosts'));
     }
     public function vision(){
         $contact = Contact::first();
-        return view('pages.vision',compact('contact'));
+        $footerRecentPosts = Post::orderBy('created_at', 'desc')->take(2)->get();
+
+        return view('pages.vision',compact('contact', 'footerRecentPosts'));
     }
     public function president()
     {
         $contact = Contact::first();
         $president = President::first();
-        return view('pages.president', compact('contact','president'));
+        $footerRecentPosts = Post::orderBy('created_at', 'desc')->take(2)->get();
+
+        return view('pages.president', compact('contact','president', 'footerRecentPosts'));
     }
 
     public function projects(){
@@ -52,27 +64,35 @@ class HomeController extends Controller
         $locations = Project::select('location', DB::raw('COUNT(*) as count'))
             ->groupBy('location')
             ->limit(3)->get();
+        $footerRecentPosts = Post::orderBy('created_at', 'desc')->take(2)->get();
+
         $recentPosts = Post::orderBy('created_at', 'desc')->take(3)->get();
-        return view('pages.project.index', compact('contact','projects','categories','locations','recentPosts'));
+        return view('pages.project.index', compact('contact','projects', 'footerRecentPosts','categories','locations','recentPosts'));
     }
     public function projectDetails($id)
     {
         $project = Project::findOrFail($id);
         $contact = Contact::first();
+        $footerRecentPosts = Post::orderBy('created_at', 'desc')->take(2)->get();
 
-        return view('pages.project.details', compact('contact','project'));
+
+        return view('pages.project.details', compact('contact','project', 'footerRecentPosts'));
     }
     public function branches()
     {
         $contact = Contact::first();
-        return view('pages.branches', compact('contact'));
+        $footerRecentPosts = Post::orderBy('created_at', 'desc')->take(2)->get();
+
+        return view('pages.branches', compact('contact', 'footerRecentPosts'));
     }
     public function posts()
     {
         $contact = Contact::first();
+        $footerRecentPosts = Post::orderBy('created_at', 'desc')->take(2)->get();
+
         $recentPosts = Post::orderBy('created_at', 'desc')->take(3)->get();
         $posts = Post::orderBy('created_at', 'desc')->paginate(4);
-        return view('pages.post.index', compact('contact','posts', 'recentPosts'));
+        return view('pages.post.index', compact('contact','posts', 'recentPosts', 'footerRecentPosts'));
     }
 
 
@@ -81,14 +101,19 @@ class HomeController extends Controller
         $post = Post::findOrFail($id);
         $recentPosts = Post::orderBy('created_at', 'desc')->take(3)->get();
         $contact = Contact::first();
-        return view('pages.post.details', compact('contact','post','recentPosts'));
+        $footerRecentPosts = Post::orderBy('created_at', 'desc')->take(2)->get();
+
+        return view('pages.post.details', compact('contact','post','recentPosts', 'footerRecentPosts'));
     }
 
 
 
-    public function familypledge()
-{
+    public function volunteer()
+    {
+        $contact = Contact::first();
+        $footerRecentPosts = Post::orderBy('created_at', 'desc')->take(2)->get();
 
-    
-}
+
+        return view('pages.volunteer', compact('contact', 'footerRecentPosts'));
+    }
 }

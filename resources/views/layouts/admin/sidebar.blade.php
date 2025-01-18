@@ -3,7 +3,7 @@
 
     <!-- LOGO -->
     <div class="navbar-brand-box">
-        <a href="{{ route('admin') }}" class="logo logo-dark">
+        <a href="{{ route('admin.dashboard') }}" class="logo logo-dark">
             <span class="logo-sm">
                 <img src="{{asset('build/images/logo-sm-dark.png')}}" alt="شعار الجمعية" height="30">
             </span>
@@ -12,7 +12,7 @@
             </span>
         </a>
 
-        <a href="{{ route('admin') }}" class="logo logo-light">
+        <a href="{{ route('admin.dashboard') }}" class="logo logo-light">
             <span class="logo-sm">
                 <img src="{{asset('build/images/logo-sm-light.png')}}" alt="شعار الجمعية" height="30">
             </span>
@@ -36,13 +36,13 @@
                 <li class="menu-title">القائمة الرئيسية</li>
 
                 <li>
-                    <a href="{{route('admin')}}" class="waves-effect">
+                    <a href="{{route('admin.dashboard')}}" class="waves-effect">
                         <i class="uim uim-airplay"></i>
                         <span>لوحة التحكم</span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('settings') }}" class="waves-effect">
+                    <a href="{{ route('admin.settings') }}" class="waves-effect">
                         <i class="uim uim-upload-alt"></i>
                         <span>الإعدادات العامة</span>
                     </a>
@@ -149,7 +149,7 @@
     </div>
 </div>
 
-<form action="{{ route('profile.update') }}" method="POST" id="profile-image-form" enctype="multipart/form-data">
+<form action="{{ route('admin.profile.update') }}" method="POST" id="profile-image-form" enctype="multipart/form-data">
     @csrf
     <input id="file-upload" name="file" type="file" accept="image/*" style="display: none;" required>
     <input type="hidden" id="cropped-image" name="cropped_image">

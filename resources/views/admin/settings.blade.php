@@ -20,7 +20,7 @@
     <div class="row">
         <div class="col-xl-5">
             <div class="card">
-                <form method="POST" action="{{ route('contact.update') }}">
+                <form method="POST" action="{{ route('admin.contact.update') }}">
                     @csrf
                     <div class="card-header border-0 align-items-center d-flex pb-0">
                         <h4 class="card-title flex-grow-1 fs-4">معلومات الاتصال بالجمعية</h4>
@@ -149,7 +149,7 @@
                             <h4 class="card-title mb-0 flex-grow-1 fs-4">معلومات المشروع المثبت في الصفحة الرئيسية</h4>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('featured-project.update') }}" method="POST">
+                            <form action="{{ route('admin.featured-project.update') }}" method="POST">
                                 @csrf
                                 <div class="row mb-3">
                                     <label for="title" class="col-sm-3 col-form-label">عنوان المشروع</label>
@@ -222,7 +222,7 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col-md-4">
                                         <div class="card-body">
-                                            <form action="{{ route('gallery.destroy', ['id'=>$image->id]) }}"
+                                            <form action="{{ route('admin.gallery.destroy', ['id'=>$image->id]) }}"
                                                 method="POST" onsubmit="return confirm('هل أنت متأكد من حذف الصورة؟');">
                                                 @csrf
                                                 @method('DELETE')
@@ -249,7 +249,7 @@
                     <div class="card">
                         <div class="card-body">
                             <!-- إضافة صورة جديدة -->
-                            <form action="{{ route('gallery') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('admin.gallery') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group mb-3">
                                     <label for="title">عنوان الصورة (اختياري):</label>

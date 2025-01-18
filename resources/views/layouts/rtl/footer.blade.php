@@ -78,32 +78,38 @@
                         <h5>آخر الأخبار</h5>
                     </div>
                     <div class="footer-three__widget-content">
-                        <div class="footer-three__widget-news">
-                            <div class="thumb">
-                                <a href="news-details.html">
-                                    <img src="{{asset('assets/images/blog/ph-one.png')}}" alt="الأخبار">
-                                </a>
+                        @foreach ($footerRecentPosts as $postfff)
+                            <div class="footer-three__widget-news">
+                                <div class="thumb">
+                                    
+                                        <a href="{{ route('posts.show', ['id'=>$postfff->id]) }}">
+                                            @if ($postfff->type=='image')
+                                            <img src="{{asset('storage/' . $postfff->image) }}" alt="الأخبار">
+                                            
+                                            @else
+                                            @php
+                                            // Extract YouTube video ID from the URL using regex
+                                            preg_match('/(?:https?:\/\/(?:www\.)?youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/)([a-zA-Z0-9_-]{11}))/i',
+                                            $postfff->video_url, $matches);
+                                            preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/
+                                            ]{11})%i',$postfff->video_url, $matches);
+                                        
+                                            $videoId = $matches[1] ?? null;
+                                        
+                                            @endphp
+                                            <img src="https://img.youtube.com/vi/{{ $videoId }}/maxresdefault.jpg" alt="Image">
+                                            @endif
+                                        </a>
+                                </div>
+                                <div class="content">
+                                    <p><i class="fa-solid fa-calendar"></i>{{
+                                    $postfff->created_at->diffForHumans() }}</p>
+                                    <p>
+                                        <a href="{{ route('posts.show', ['id'=>$postfff->id]) }}">{{$postfff->title}}</a>
+                                    </p>
+                                </div>
                             </div>
-                            <div class="content">
-                                <p><i class="fa-solid fa-calendar"></i>10 يناير 2025</p>
-                                <p>
-                                    <a href="news-details.html">انطلاق حملة الشتاء الدافئ لدعم الأسر المحتاجة</a>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="footer-three__widget-news">
-                            <div class="thumb">
-                                <a href="news-details.html">
-                                    <img src="{{asset('assets/images/blog/ph-two.png')}}" alt="الأخبار">
-                                </a>
-                            </div>
-                            <div class="content">
-                                <p><i class="fa-solid fa-calendar"></i>5 يناير 2025</p>
-                                <p>
-                                    <a href="news-details.html">توزيع المساعدات الغذائية في المناطق النائية</a>
-                                </p>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

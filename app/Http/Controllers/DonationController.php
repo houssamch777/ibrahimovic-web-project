@@ -11,7 +11,8 @@ class DonationController extends Controller
     //
     public function index(){
         $contact = Contact::first();
+        $footerRecentPosts = Post::orderBy('created_at', 'desc')->take(2)->get();
         $recentPosts = Post::orderBy('created_at', 'desc')->take(3)->get();
-        return view('pages.donation',compact('contact','recentPosts'));
+        return view('pages.donation',compact('contact','footerRecentPosts','recentPosts'));
     }
 }

@@ -89,10 +89,7 @@
                                             <a href="{{route('president')}}">رئيس الجمعية</a>
                                         </li>
                                         <li>
-                                            <a href="#">فريق العمل</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">مكاتبنا</a>
+                                            <a href="{{route('branches')}}">مكاتبنا</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -104,7 +101,7 @@
                                             <a href="{{route('projects')}}">مشاريعنا</a>
                                         </li>
                                         <li>
-                                            <a href="{{route('family.pledge')}}">ميثاق العائلة الجزائرية</a>
+                                            <a href="{{route('familypledge')}}">ميثاق العائلة الجزائرية</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -116,19 +113,9 @@
                                             <a href="{{route('posts')}}">أخر الأخبار</a>
                                         </li>
                                         <li>
-                                            <a href="#">معرض الصور</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">معرض الفيديوات</a>
-                                        </li>
-                                        <li>
                                             <a href="#">وثائق وتقارير</a>
                                         </li>
                                     </ul>
-                                </li>
-
-                                <li class="navbar__item nav-fade">
-                                    <a href="" class="navbar__link">تطوع معنا</a>
                                 </li>
                                 <li class="navbar__item nav-fade">
                                     <a href="{{ route('contact') }}" class="navbar__link">اتصل بنا</a>
@@ -174,7 +161,7 @@
         </div>
         <div class="mobile-menu__list"></div>
         <div class="mobile-menu__cta nav-fade d-block d-md-none">
-            <a href="#" class="btn--primary ">بوابة التطوع <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="{{route('donation.index')}}" class="btn--primary ">تبرع الآن<i class="fa-solid fa-arrow-right"></i></a>
         </div>
         <div class="mobile-menu__social social nav-fade">
             @php

@@ -17,9 +17,8 @@
                             </div>
                             <div class="content">
                                 <h6>الموقع</h6>
-                                <p><a href="https://maps.app.goo.gl/Gr9pTNqz5FRNrjQw8" target="_blank">
-                                        شارع الرئيسي، البناية الثانية،
-                                        الجزائر العاصمة، الجزائر
+                                <p><a href="{{$contact->google_map}}" target="_blank">
+                                        {{$contact->address}}
                                     </a>
                                 </p>
                             </div>
@@ -30,8 +29,8 @@
                             </div>
                             <div class="content">
                                 <h6>الهاتف</h6>
-                                <p><a href="tel:+213123456789" style="direction: ltr">+213 123 456 789</a></p>
-                                <p><a href="tel:+213987654321" style="direction: ltr">+213 987 654 321</a></p>
+                                <p><a href="tel:{{$contact->phone}}" style="direction: ltr">{{$contact->phone}}</a></p>
+                                <p><a href="tel:{{$contact->alt_phone}}" style="direction: ltr">{{$contact->alt_phone}}</a></p>
                             </div>
                         </div>
                         <div class="contact-main__single">
@@ -40,8 +39,7 @@
                             </div>
                             <div class="content">
                                 <h6>البريد الإلكتروني</h6>
-                                <p><a href="mailto:info@albaraka.org">info@albaraka.org</a></p>
-                                <p><a href="mailto:support@albaraka.org">support@albaraka.org</a></p>
+                                <p><a href="mailto:{{$contact->email}}">{{$contact->email}}</a></p>
                             </div>
                         </div>
                         <div class="contact-main__single">
@@ -51,24 +49,30 @@
                             <div class="content">
                                 <h6>الشبكات الاجتماعية</h6>
                                 <div class="social">
-                                    <a href="https://www.facebook.com/yourpage" target="_blank" aria-label="تابعنا على فيسبوك" title="فيسبوك">
-                                        <i class="fa-brands fa-facebook-f"></i>
+                                    @php
+                                                                        $socialLinks = [
+                                                                        'facebook' => ['url' => $contact->facebook, 'icon' => 'fa-facebook-f', 'label' =>
+                                                                        'facebook'],
+                                                                        'instagram' => ['url' => $contact->instagram, 'icon' => 'fa-instagram', 'label' =>
+                                                                        'instagram'],
+                                                                        'twitter' => ['url' => $contact->twitter, 'icon' => 'fa-twitter', 'label' =>
+                                                                        'twitter'],
+                                                                        'telegram' => ['url' => $contact->telegram, 'icon' => 'fa-telegram', 'label' =>
+                                                                        'telegram'],
+                                                                        'youtube' => ['url' => $contact->youtube, 'icon' => 'fa-youtube', 'label' =>
+                                                                        'youtube'],
+                                                                        'tiktok' => ['url' => $contact->tiktok, 'icon' => 'fa-tiktok', 'label' => 'tiktok'],
+                                                                        ];
+                                                                        @endphp
+                                                                        
+                                    @foreach ($socialLinks as $key => $social)
+                                    @if (!empty($social['url']))
+                                    <a href="{{ $social['url'] }}" target="_blank" aria-label="share us on {{ $social['label'] }}"
+                                        title="{{ $social['label'] }}">
+                                        <i class="fa-brands {{ $social['icon'] }}"></i>
                                     </a>
-                                    <a href="https://t.me/yourchannel" target="_blank" aria-label="تابعنا على تيليغرام" title="تيليغرام">
-                                        <i class="fa-brands fa-telegram"></i>
-                                    </a>
-                                    <a href="https://www.instagram.com/yourprofile" target="_blank" aria-label="تابعنا على إنستغرام" title="إنستغرام">
-                                        <i class="fa-brands fa-instagram"></i>
-                                    </a>
-                                    <a href="https://www.tiktok.com/@yourprofile" target="_blank" aria-label="تابعنا على تيكتوك" title="تيكتوك">
-                                        <i class="fa-brands fa-tiktok"></i>
-                                    </a>
-                                    <a href="https://www.youtube.com/yourchannel" target="_blank" aria-label="تابعنا على يوتيوب" title="يوتيوب">
-                                        <i class="fa-brands fa-youtube"></i>
-                                    </a>
-                                    <a href="https://x.com/yourprofile" target="_blank" aria-label="تابعنا على تويتر" title="تويتر">
-                                        <i class="fa-brands fa-twitter"></i>
-                                    </a>
+                                    @endif
+                                    @endforeach                     
                                 </div>
                             </div>
                         </div>
