@@ -18,11 +18,17 @@ class HomeController extends Controller
     {
         $Images = GalleryImage::get();
         $project = FeaturedProject::first();
+        $projects = Project::where('is_featured', true) // اختيار المشاريع المميزة
+            ->orderBy('created_at', 'desc') // ترتيبها تنازليًا حسب تاريخ الإنشاء
+            ->take(6) // اختيار أول 6 مشاريع فقط
+            ->get();
+        
         $contact = Contact::first();
+        $recentPosts = Post::orderBy('created_at', 'desc')->take(3)->get();
         $footerRecentPosts = Post::orderBy('created_at', 'desc')->take(2)->get();
 
 
-        return view('welcome',compact('Images','project','contact','footerRecentPosts'));
+        return view('welcome',compact('Images','project','projects','recentPosts','contact','footerRecentPosts'));
     }
     public function aboutCharity()
     {

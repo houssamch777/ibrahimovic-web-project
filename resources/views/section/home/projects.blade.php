@@ -29,171 +29,33 @@
                 <div class="cause__slider-wrapper">
                     <div class="cause__slider swiper">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <div class="cause__slider-inner">
-                                    <div class="cause__slider-single">
-                                        <div class="thumb">
-                                            <a href="cause-details.html">
-                                                <img src="assets/images/cause/7.jpg" alt="Image">
-                                            </a>
-                                            <div class="tag">
-                                                <a href="our-causes.html">إغاثة</a>
+                            @foreach ($projects as $projectslide)
+                                <div class="swiper-slide">
+                                    <div class="cause__slider-inner">
+                                        <div class="cause__slider-single">
+                                            <div class="thumb">
+                                                <a href="{{ route('projects.show', $projectslide->id) }}">
+                                                    <img src="{{ asset('storage/' . $projectslide->image_url) }}" alt="Image">
+                                                </a>
+                                                <div class="tag">
+                                                    <a href="#">{{$projectslide->category}}</a>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="content" style="direction: rtl;text-align: right">
-                                            <h6><a href="cause-details.html">تقديم وجبات غذائية لأهالي غزة</a></h6>
-                                            <p>ساهم في تقديم وجبات غذائية طازجة للعائلات المحتاجة ضمن حملة الوعد
-                                                المفعول.</p>
-                                        </div>
-                                        <div class="cause__cta">
-                                            <a href="donate-us.html" aria-label="تبرع الآن" title="تبرع الآن"
-                                                class="btn--secondary">تبرع
-                                                الآن</a>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="cause__slider-inner">
-                                    <div class="cause__slider-single">
-                                        <div class="thumb">
-                                            <a href="cause-details.html">
-                                                <img src="assets/images/cause/1.jpg" alt="Image">
-                                            </a>
-                                            <div class="tag">
-                                                <a href="our-causes.html">إغاثة</a>
+                                            <div class="content" style="direction: rtl; text-align: right;">
+                                                <h6><a href="{{ route('projects.show', $projectslide->id) }}">{{$projectslide->name}}</a></h6>
+                                                <p>{{ \Illuminate\Support\Str::limit($projectslide->description, 120, '...') }}
+                                                    <a class="text-success" href="{{ route('projects.show', $projectslide->id) }}" aria-label="blog details" title="blog details"><strong >إقرأ المزيد</strong>
+                                                        <i class="fa-solid fa-circle-arrow-right"></i></a>
+                                                </p>
                                             </div>
-                                        </div>
-                                        <div class="content" style="direction: rtl; text-align: right;">
-                                            <h6><a href="cause-details.html">توزيع الخيام على اللاجئين</a></h6>
-                                            <p>ساهم في توفير خيام إيواء للعائلات اللاجئة التي تعاني من ظروف معيشية صعبة.
-                                            </p>
-                                        </div>
-                                        <div class="cause__cta">
-                                            <a href="donate-us.html" aria-label="تبرع الآن" title="تبرع الآن"
-                                                class="btn--secondary">تبرع الآن</a>
+                                            <dive class="cause__cta">
+                
+                                                <a href="{{route('donation.index')}}" aria-label="تبرع الآن" title="تبرع الآن" class="btn--secondary">تبرع الآن</a>
+                                            </dive>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="cause__slider-inner">
-                                    <div class="cause__slider-single">
-                                        <div class="thumb">
-                                            <a href="cause-details.html">
-                                                <img src="assets/images/cause/2.jpg" alt="Image">
-                                            </a>
-                                            <div class="tag">
-                                                <a href="our-causes.html">إغاثة</a>
-                                            </div>
-                                        </div>
-                                        <div class="content" style="direction: rtl; text-align: right;">
-                                            <h6><a href="cause-details.html">توزيع الكسوة على المحتاجين</a></h6>
-                                            <p>ساهم في تقديم ملابس دافئة للعائلات المحتاجة لتخفيف معاناتهم في فصل
-                                                الشتاء.</p>
-                                        </div>
-                                        <div class="cause__cta">
-                                            <a href="donate-us.html" aria-label="تبرع الآن" title="تبرع الآن"
-                                                class="btn--secondary">تبرع الآن</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="cause__slider-inner">
-                                    <div class="cause__slider-single">
-                                        <div class="thumb">
-                                            <a href="cause-details.html">
-                                                <img src="assets/images/cause/5.jpg" alt="Image">
-                                            </a>
-                                            <div class="tag">
-                                                <a href="our-causes.html">إغاثة</a>
-                                            </div>
-                                        </div>
-                                        <div class="content" style="direction: rtl; text-align: right;">
-                                            <h6><a href="cause-details.html">توزيع الطرود الغذائية</a></h6>
-                                            <p>ساهم في تقديم الطرود الغذائية للعائلات المحتاجة لتخفيف العبء عنهم وضمان
-                                                احتياجاتهم الأساسية.</p>
-                                        </div>
-                                        <div class="cause__cta">
-                                            <a href="donate-us.html" aria-label="تبرع الآن" title="تبرع الآن"
-                                                class="btn--secondary">تبرع الآن</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="cause__slider-inner">
-                                    <div class="cause__slider-single">
-                                        <div class="thumb">
-                                            <a href="cause-details.html">
-                                                <img src="assets/images/cause/6.jpg" alt="Image">
-                                            </a>
-                                            <div class="tag">
-                                                <a href="our-causes.html">مساعدات</a>
-                                            </div>
-                                        </div>
-                                        <div class="content" style="direction: rtl; text-align: right;">
-                                            <h6><a href="cause-details.html">توزيع الأظرفة النقدية</a></h6>
-                                            <p>شارك في دعم الأسر المحتاجة من خلال تقديم أظرفة نقدية تضمن لهم توفير
-                                                احتياجاتهم الضرورية بكرامة وحرية.
-                                            </p>
-                                        </div>
-                                        <div class="cause__cta">
-                                            <a href="donate-us.html" aria-label="تبرع الآن" title="تبرع الآن"
-                                                class="btn--secondary">تبرع الآن</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="cause__slider-inner">
-                                    <div class="cause__slider-single">
-                                        <div class="thumb">
-                                            <a href="cause-details.html">
-                                                <img src="assets/images/cause/4.jpg" alt="Image">
-                                            </a>
-                                            <div class="tag">
-                                                <a href="our-causes.html">رعاية</a>
-                                            </div>
-                                        </div>
-                                        <div class="content" style="direction: rtl; text-align: right;">
-                                            <h6><a href="cause-details.html">كفالة أيتام غزة</a></h6>
-                                            <p>ساهم في كفالة أطفال غزة الأيتام لتوفير الاحتياجات الأساسية من تعليم، صحة،
-                                                وغذاء، وضمان حياة كريمة
-                                                لهم.</p>
-                                        </div>
-                                        <div class="cause__cta">
-                                            <a href="donate-us.html" aria-label="تبرع الآن" title="تبرع الآن"
-                                                class="btn--secondary">تبرع الآن</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="cause__slider-inner">
-                                    <div class="cause__slider-single">
-                                        <div class="thumb">
-                                            <a href="cause-details.html">
-                                                <img src="assets/images/cause/3.png" alt="Image">
-                                            </a>
-                                            <div class="tag">
-                                                <a href="our-causes.html">إغاثة</a>
-                                            </div>
-                                        </div>
-                                        <div class="content" style="direction: rtl; text-align: right;">
-                                            <h6><a href="cause-details.html">مشروع سقيا الماء</a></h6>
-                                            <p>ساهم في توفير مياه الشرب النقية للأسر المحتاجة في غزة لتخفيف معاناتهم
-                                                وتحسين ظروفهم الصحية.</p>
-                                        </div>
-                                        <div class="cause__cta">
-                                            <a href="donate-us.html" aria-label="تبرع الآن" title="تبرع الآن"
-                                                class="btn--secondary">تبرع الآن</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>

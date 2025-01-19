@@ -25,35 +25,7 @@
                                 <h5><a href="team-details.html">الشيخ أحمد إبراهيمي</a></h5>
                                 <p>رئيس جمعية البركة الجزائرية</p>
                             </div>
-                            <div class="team__icons">
-                                <div class="team__single-content__icon">
-                                    <i class="icon-share"></i>
-                                </div>
-                                <div class="team__single__thumb-social">
-                                    <ul>
-                                        <li>
-                                            <a href="index.html">
-                                                <i class="fa-brands fa-facebook-f"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="index.html">
-                                                <i class="fa-brands fa-twitter"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="index.html">
-                                                <i class="fa-brands fa-instagram"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="index.html">
-                                                <i class="fa-brands fa-behance"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -70,35 +42,6 @@
                             <div class="team__single-content">
                                 <h5><a href="team-details.html">الأستاذة جبارية قربي</a></h5>
                                 <p>عضو المكتب الوطني المكلفة بلجنة النساء</p>
-                            </div>
-                            <div class="team__icons">
-                                <div class="team__single-content__icon">
-                                    <i class="icon-share"></i>
-                                </div>
-                                <div class="team__single__thumb-social">
-                                    <ul>
-                                        <li>
-                                            <a href="index.html">
-                                                <i class="fa-brands fa-facebook-f"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="index.html">
-                                                <i class="fa-brands fa-twitter"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="index.html">
-                                                <i class="fa-brands fa-instagram"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="index.html">
-                                                <i class="fa-brands fa-behance"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -117,35 +60,7 @@
                                 <h5><a href="team-details.html">محمد اسلام ابراهيمي</a></h5>
                                 <p>عضو المكتب الوطني المكلف بلجنة الشباب</p>
                             </div>
-                            <div class="team__icons">
-                                <div class="team__single-content__icon">
-                                    <i class="icon-share"></i>
-                                </div>
-                                <div class="team__single__thumb-social">
-                                    <ul>
-                                        <li>
-                                            <a href="index.html">
-                                                <i class="fa-brands fa-facebook-f"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="index.html">
-                                                <i class="fa-brands fa-twitter"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="index.html">
-                                                <i class="fa-brands fa-instagram"></i>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="index.html">
-                                                <i class="fa-brands fa-behance"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -154,7 +69,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="section__cta cta text-center">
-                    <a href="our-team.html" aria-label="our team" title="our team" class="btn--primary">View All
+                    <a href="#" aria-label="our team" title="our team" class="btn--primary">المزيد عن فريقنا
                         <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
             </div>

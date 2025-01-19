@@ -15,10 +15,10 @@
                                 <p>نرفض متعة الذات ونمدح السعي للمعاناة النبيلة التي تكشف الحقيقة، نحن بُناة المستقبل
                                     وصانعو الأمل.</p>
                                 <div class="banner__content-cta cta">
-                                    <a href="our-causes.html" aria-label="من نحن" title="من نحن" class="btn--tertiary">
-                                        تطوع معنا<i class="fa-solid fa-arrow-right"></i>
+                                    <a href="{{route('contact')}}" aria-label="من نحن" title="من نحن" class="btn--tertiary">
+                                        أطلب استشارة<i class="fa-solid fa-arrow-right"></i>
                                     </a>
-                                    <a href="contact-us.html" aria-label="تواصل معنا" title="تواصل معنا"
+                                    <a href="{{route('donation.index')}}" aria-label="تواصل معنا" title="تواصل معنا"
                                         class="btn--primary">
                                         تبرع الآن<i class="fa-solid fa-arrow-right"></i>
                                     </a>
@@ -108,7 +108,7 @@
                     </div>
                     <div class="overview__single overview__right">
                         <span>{{$project->campaign_name}}</span>
-                        <h4><a href="cause-details.html">{{$project->subtitle}}</a></h4>
+                        <h4><a href="{{route('projects')}}">{{$project->subtitle}}</a></h4>
                         <p>{{$project->description}}</p>
                     </div>
                 </div>

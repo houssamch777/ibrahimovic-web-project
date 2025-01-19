@@ -37,46 +37,49 @@ Register
                                                     <p class="text-muted">يرجى إدخال بيانات الفرع أدناه.</p>
                                                 </div>
 
-                                                <form action="" method="POST"
+                                                <form action="{{route('admin.branch.store')}}" method="POST"
                                                     class="auth-input">
                                                     @csrf
 
                                                     <div class="mb-2">
                                                         <label for="branch-name" class="form-label">اسم الفرع</label>
                                                         <input type="text" class="form-control" id="branch-name"
-                                                            name="name" placeholder="أدخل اسم الفرع" required>
+                                                            name="name" placeholder="أدخل اسم الفرع" style="text-align: right" required>
                                                     </div>
 
                                                     <div class="mb-2">
                                                         <label for="branch-address" class="form-label">عنوان
                                                             الفرع</label>
                                                         <input type="text" class="form-control" id="branch-address"
-                                                            name="address" placeholder="أدخل عنوان الفرع" required>
+                                                            name="address" placeholder="أدخل عنوان الفرع" style="text-align: right" required>
                                                     </div>
-
+                                                    <div class="form-group">
+                                                        <label for="email">البريد الإلكتروني</label>
+                                                        <input type="email" name="email" id="email" class="form-control" style="text-align: right" placeholder="example@example.com">
+                                                    </div>
                                                     <div class="mb-2">
                                                         <label for="branch-map-link" class="form-label">رابط موقع
                                                             جوجل</label>
                                                         <input type="url" class="form-control" id="branch-map-link"
-                                                            name="map_link" placeholder="أدخل رابط الموقع على الخريطة">
+                                                            name="map_link" style="text-align: right" placeholder="أدخل رابط الموقع على الخريطة">
                                                     </div>
 
-                                                    <div class="mb-3">
-                                                        <label class="form-label">أرقام الهاتف</label>
+                                                    <!-- أرقام الهواتف -->
+                                                    <div class="form-group">
+                                                        <label for="phones">أرقام الهواتف</label>
                                                         <div id="phone-container">
-                                                            <input type="text" class="form-control mb-2" name="phone[]"
-                                                                placeholder="أدخل رقم الهاتف" required>
+                                                            <input type="text" style="direction:ltr;text-align: right" name="phones[]" class="form-control mb-2" placeholder="رقم هاتف" required>
                                                         </div>
-                                                        <button type="button" id="add-phone"
-                                                            class="btn btn-secondary btn-sm">+ أضف رقمًا آخر</button>
+                                                        <button type="button" id="add-phone" class="btn btn-secondary btn-sm">إضافة رقم هاتف آخر</button>
                                                     </div>
-
-                                                    <div class="mb-2">
-                                                        <label for="branch-social-links" class="form-label">روابط مواقع
-                                                            التواصل الاجتماعي</label>
-                                                        <textarea class="form-control" id="branch-social-links"
-                                                            name="social_links"
-                                                            placeholder="أدخل روابط مواقع التواصل، كل رابط في سطر"></textarea>
+                                                    
+                                                    <!-- روابط التواصل الاجتماعي -->
+                                                    <div class="form-group">
+                                                        <label for="social_links">روابط التواصل الاجتماعي</label>
+                                                        <div id="social-container">
+                                                            <input type="url" style="text-align: right" name="social_links[]" class="form-control mb-2" placeholder="رابط تواصل اجتماعي" required>
+                                                        </div>
+                                                        <button type="button" id="add-social" class="btn btn-secondary btn-sm">إضافة رابط تواصل اجتماعي آخر</button>
                                                     </div>
 
                                                     <div class="mb-3">
@@ -130,14 +133,35 @@ Register
 @section('scripts')
 <!-- App js -->
 <script>
-    document.getElementById('add-phone').addEventListener('click', function () {
+    // إضافة رقم هاتف
+    document.getElementById('add-phone').addEventListener('click', function() {
         const phoneContainer = document.getElementById('phone-container');
-        const newInput = document.createElement('input');
-        newInput.type = 'text';
-        newInput.name = 'phone[]';
-        newInput.placeholder = 'أدخل رقم الهاتف';
-        newInput.className = 'form-control mb-2';
-        phoneContainer.appendChild(newInput);
+        const div = document.createElement('div');
+        div.className = 'input-group mb-2';
+        div.innerHTML = `
+            <input type="text" style="direction:ltr;text-align: right" name="phones[]" class="form-control" placeholder="رقم هاتف" required>
+            <button type="button" class="btn btn-danger remove-line">إزالة</button>
+        `;
+        phoneContainer.appendChild(div);
+    });
+
+    // إضافة رابط تواصل اجتماعي
+    document.getElementById('add-social').addEventListener('click', function() {
+        const socialContainer = document.getElementById('social-container');
+        const div = document.createElement('div');
+        div.className = 'input-group mb-2';
+        div.innerHTML = `
+            <input type="url" style="direction:rtl;text-align: right" name="social_links[]" class="form-control" placeholder="رابط تواصل اجتماعي" required>
+            <button type="button" class="btn btn-danger remove-line">إزالة</button>
+        `;
+        socialContainer.appendChild(div);
+    });
+
+    // إزالة السطر عند النقر على زر "إزالة"
+    document.addEventListener('click', function(e) {
+        if (e.target && e.target.classList.contains('remove-line')) {
+            e.target.parentElement.remove();
+        }
     });
 </script>
 <script src="{{ URL::asset('build/js/app.js') }}"></script>

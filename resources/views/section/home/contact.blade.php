@@ -11,7 +11,7 @@
                         </h2>
                     </div>
                     <div class="contact__form cta" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
-                        <form action="#" method="post">
+                        <form >
                             <div class="input-group">
                                 <div class="input-single">
                                     <input type="email" name="contact-email" id="contactEmail"

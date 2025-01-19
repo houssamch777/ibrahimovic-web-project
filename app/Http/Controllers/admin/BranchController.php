@@ -15,4 +15,8 @@ class BranchController extends Controller
     {
         return view('admin.branch.create');
     }
+    public function store(Request $request){
+
+        dd($request->input());
+    }
 }

@@ -16,7 +16,7 @@
                             </div>
                             <div class="col-12 col-lg-4 col-xxl-5">
                                 <div class="help-cta">
-                                    <a href="about-us.html" aria-label="فريقنا" title="فريقنا"
+                                    <a href="{{route('about')}}" aria-label="فريقنا" title="فريقنا"
                                         class="btn--primary">المزيد عنا<i class="fa-solid fa-arrow-right"></i></a>
                                 </div>
                             </div>
