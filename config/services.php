@@ -13,8 +13,11 @@ return [
     | a conventional file to locate the various service credentials.
     |
     */
-
-    'postmark' => [
+    'recaptcha' => [
+        'key' => env('RECAPTCHA_SITE_KEY'),
+        'secret' => env('RECAPTCHA_SECRET_KEY'),
+    ],
+        'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],
 
@@ -33,6 +36,10 @@ return [
             'bot_user_oauth_token' => env('SLACK_BOT_USER_OAUTH_TOKEN'),
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
+
+        
     ],
+
+
 
 ];

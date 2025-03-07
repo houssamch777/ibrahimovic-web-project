@@ -19,7 +19,11 @@ use App\Http\Controllers\admin\SettingsController;
 // ==========================
 // Public Routes
 // ==========================
+use App\Http\Controllers\admin\PaymentController;
 
+Route::post('/payment/create', [PaymentController::class, 'create'])->name('payment.create');
+Route::get('/payment/success', [PaymentController::class, 'paymentSuccess'])->name('payment.success');
+Route::get('/payment/failure', [PaymentController::class, 'paymentFailure'])->name('payment.failure');
 // Home & General Pages
 Route::get('/', [HomeController::class, 'index'])->name('home')->middleware(\App\Http\Middleware\LogVisitor::class);
 Route::get('about-us', [HomeController::class, 'aboutCharity'])->name('about');
