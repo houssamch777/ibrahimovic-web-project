@@ -8,6 +8,8 @@
     "require": {
         "php": "^8.2",
         "anhskohbo/no-captcha": "^3.7",
+        "hassanhelfi/number-to-arabic": "^1.0",
+        "intervention/image": "^3.11",
         "laravel/framework": "^11.31",
         "laravel/tinker": "^2.9",
         "laravel/ui": "^4.6"

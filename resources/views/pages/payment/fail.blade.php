@@ -31,44 +31,41 @@
             <div class="cm-details donate-us community checkout faq">
                 <div class="container">
                     <div class="row gutter-60">
-                        <div class="container mt-5">
-                            <div class="row justify-content-center">
-                                <div class="col-md-8">
-                                    <div class="card shadow-lg">
-                                        <div class="card-header bg-danger text-white text-center">
-                                            <h4>Transaction Échouée</h4>
-                                        </div>
-                                        <div class="card-body">
-                                            @if ($errors->any())
-                                                <div class="alert alert-danger">
-                                                    @foreach ($errors->all() as $error)
-                                                        <p>{{ $error }}</p>
-                                                    @endforeach
-                                                </div>
-                                            @endif
+                        <div class="container py-5">
+                            <div class="text-center">
+                                <div class="alert alert-danger" role="alert">
+                                    <h3>عذرًا! العملية لم تتم بنجاح</h3>
+                                    <p class="mt-3">
+                                        {{ $errors->first('error') ?? 'حدث خطأ أثناء معالجة العملية. الرجاء المحاولة مرة أخرى.' }}
+                                    </p>
+                                </div>
                         
-                                            <p class="text-center">
-                                                Nous sommes désolés, votre transaction n'a pas pu être complétée.
-                                            </p>
-                                            <p class="text-center">
-                                                Si le problème persiste, veuillez contacter le numéro vert de la SATIM : <strong>3020</strong><img src="{{asset('assets/3020.png')}}" alt="" class="m-2">.
-                                            </p>
-                        
-                                            <div class="text-center mt-4">
-                                                <a href="{{ route('donation.index') }}" class="btn btn-primary">Retourner à la page de donation</a>
-                                            </div>
-                                        </div>
+                                <div class="card my-4">
+                                    <div class="card-body">
+                                        <h4 class="card-title">تفاصيل العملية</h4>
+                                        <p><strong>رقم الطلب:</strong> {{ $orderNumber ?? 'غير متوفر' }}</p>
+                                        <p><strong>المبلغ:</strong> {{ isset($amount) ? number_format($amount, 2) : 'غير متوفر' }} دج</p>
+                                        <p><strong>حالة العملية:</strong> فشلت</p>
                                     </div>
+                                </div>
+                        
+                                <div class="mt-4">
+                                    <a href="{{ route('donation.index') }}" class="btn btn-primary">
+                                        العودة إلى صفحة التبرع
+                                    </a>
+                                    <a href="{{ route('home') }}" class="btn btn-secondary">
+                                        العودة إلى الصفحة الرئيسية
+                                    </a>
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
             </div>
         <!-- ==== / donate us section end ==== -->
         </div>
     </section>
-
 
 
 @endsection

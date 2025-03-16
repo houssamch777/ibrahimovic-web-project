@@ -21,9 +21,10 @@ use App\Http\Controllers\admin\SettingsController;
 // ==========================
 use App\Http\Controllers\admin\PaymentController;
 
-Route::post('/payment/create', [PaymentController::class, 'create'])->name('payment.create');
-Route::get('/payment/success', [PaymentController::class, 'paymentSuccess'])->name('payment.success');
-Route::get('/payment/failure', [PaymentController::class, 'paymentFailure'])->name('payment.failure');
+Route::post('/donation/create', [PaymentController::class, 'create'])->name('payment.create');
+Route::get('/donation/success', [PaymentController::class, 'paymentSuccess'])->name('payment.success');
+Route::get('/donation/failure', [PaymentController::class, 'paymentFailure'])->name('payment.failure');
+Route::post('/send-receipt-email', [PaymentController::class, 'sendReceiptEmail'])->name('send.receipt.email');
 // Home & General Pages
 Route::get('/', [HomeController::class, 'index'])->name('home')->middleware(\App\Http\Middleware\LogVisitor::class);
 Route::get('about-us', [HomeController::class, 'aboutCharity'])->name('about');
