@@ -15,16 +15,28 @@ use App\Http\Controllers\admin\PostController;
 use App\Http\Controllers\admin\PresidentController;
 use App\Http\Controllers\admin\ProjectController;
 use App\Http\Controllers\admin\SettingsController;
+use App\Http\Controllers\admin\PaymentController;
 
+use App\Models\Post;
+use App\Models\Project;
+
+Route::get('/sitemaptest.xml', function () {
+    $posts = Post::all(); // اجلب جميع المقالات
+    $projects = Project::all(); // اجلب جميع المشاريع
+
+    return response()->view('sitemap', compact('posts', 'projects'))
+        ->header('Content-Type', 'application/xml');
+});
 // ==========================
 // Public Routes
 // ==========================
-use App\Http\Controllers\admin\PaymentController;
 
+// Payment Routes
 Route::post('/donation/create', [PaymentController::class, 'create'])->name('payment.create');
 Route::get('/donation/success', [PaymentController::class, 'paymentSuccess'])->name('payment.success');
 Route::get('/donation/failure', [PaymentController::class, 'paymentFailure'])->name('payment.failure');
 Route::post('/send-receipt-email', [PaymentController::class, 'sendReceiptEmail'])->name('send.receipt.email');
+
 // Home & General Pages
 Route::get('/', [HomeController::class, 'index'])->name('home')->middleware(\App\Http\Middleware\LogVisitor::class);
 Route::get('about-us', [HomeController::class, 'aboutCharity'])->name('about');
@@ -32,6 +44,7 @@ Route::get('president', [HomeController::class, 'president'])->name('president')
 Route::get('contact', [HomeController::class, 'contact'])->name('contact');
 Route::get('vision', [HomeController::class, 'vision'])->name('vision');
 Route::get('branches', [HomeController::class, 'branches'])->name('branches');
+Route::get('linktree', [HomeController::class, 'linktree'])->name('linktree');
 
 // Donation & Volunteer
 Route::get('donation', [DonationController::class, 'index'])->name('donation.index');
@@ -57,6 +70,7 @@ Route::get('test', [TestController::class, 'index'])->name('test');
 // ==========================
 // Admin Routes
 // ==========================
+
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     // Dashboard
     Route::get('/', [AdminController::class, 'index'])->name('dashboard');

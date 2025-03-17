@@ -30,6 +30,9 @@ class HomeController extends Controller
 
         return view('welcome',compact('Images','project','projects','recentPosts','contact','footerRecentPosts'));
     }
+    public function linktree(){
+        return view('linktree');
+    }
     public function aboutCharity()
     {
         $contact = Contact::first();
