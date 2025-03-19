@@ -32,82 +32,104 @@ class PaymentController extends Controller
     }
     public function create(Request $request)
     {
-        // Validation rules
+        // قواعد التحقق
         $validated = $request->validate([
             'amount' => 'required|numeric|min:50',
             'terms' => 'required|accepted',
             'g-recaptcha-response' => ['required', new ReCaptcha],
+        ], [
+            'amount.required' => 'المبلغ مطلوب.',
+            'amount.numeric' => 'يجب أن يكون المبلغ رقمًا.',
+            'amount.min' => 'الحد الأدنى للمبلغ هو 50.',
+            'terms.required' => 'يجب قبول الشروط.',
+            'g-recaptcha-response.required' => 'التحقق من الكابتشا مطلوب.',
         ]);
+    
         $url = $this->paymentGatewayBaseUrl . "register.do";
-        $amount = $validated['amount'] * 100;// تحويل المبلغ إلى الشكل المناسب (ضرب في 100)
-        $orderNumber = time() . mt_rand(1000, 9999); // Generate a unique order number
-
-        // Prepare JSON Params
+        $amount = $validated['amount'] * 100; // تحويل المبلغ إلى الشكل المناسب
+        $orderNumber = time() . mt_rand(1000, 9999); // إنشاء رقم طلب فريد
+    
+        // إعداد JSON Params
         $jsonParams = json_encode([
             'force_terminal_id' => $this->forceTerminalId,
         ]);
-
+    
         $payload = [
             'userName' => $this->userName,
             'password' => $this->password,
             'orderNumber' => $orderNumber,
             'amount' => $amount,
-            'currency' => '012', // ISO code for DZD
+            'currency' => '012', // رمز العملة ISO للدينار الجزائري
             'returnUrl' => route('payment.success'),
             'failUrl' => route('payment.failure'),
             'description' => 'Donation Payment',
             'language' => 'AR',
             'jsonParams' => $jsonParams,
         ];
-
-        // Send the request to SATIM API
-        $response = Http::get($url, $payload);
-
-        if ($response->successful()) {
-            $data = $response->json();
-
-            // Save the transaction to the database
-            Donation::create([
-                'order_number' => $payload['orderNumber'],
-                'amount' => $payload['amount'] / 100, // Convert back to DZD
-                'currency' => $payload['currency'],
-                'status' => 'pending', // Default status
-            ]);
-
-            // Redirect the user to the payment page
-            return redirect($data['formUrl']);
+    
+        try {
+            // إرسال الطلب إلى واجهة SATIM API
+            $response = Http::get($url, $payload);
+    
+            if ($response->successful()) {
+                $data = $response->json();
+    
+                // حفظ المعاملة في قاعدة البيانات
+                Donation::create([
+                    'order_number' => $payload['orderNumber'],
+                    'amount' => $payload['amount'] / 100, // تحويل المبلغ إلى الدينار الجزائري
+                    'currency' => $payload['currency'],
+                    'status' => 'pending', // الحالة الافتراضية
+                ]);
+    
+                // إعادة توجيه المستخدم إلى صفحة الدفع
+                return redirect($data['formUrl']);
+            }
+    
+            // تسجيل الخطأ إذا فشل الطلب
+            \Log::error('خطأ في واجهة الدفع', ['response' => $response->body()]);
+    
+            // معالجة أخطاء API
+            return back()->withErrors(['error' => "فشل طلب الدفع. يرجى المحاولة مرة أخرى لاحقًا."]);
+        } catch (\Exception $e) {
+            // تسجيل الاستثناء
+            \Log::error('استثناء في واجهة الدفع', ['message' => $e->getMessage()]);
+    
+            // معالجة الأخطاء غير المتوقعة
+            return back()->withErrors(['error' => "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى لاحقًا."]);
         }
-
-        // Handle API errors
-        return back()->withErrors(['error' => "فشل طلب الدفع. يرجى المحاولة مرة أخرى لاحقًا."]);
-
     }
 
     /**
      * معالجة نجاح الدفع.
      */
     public function paymentSuccess(Request $request)
-    {
-        // Validate the incoming request
-        $validated = $request->validate([
-            'orderId' => 'required|string',
-        ]);
-        $url = $this->paymentGatewayBaseUrl . "confirmOrder.do";
+{
+    // التحقق من الطلب الوارد
+    $validated = $request->validate([
+        'orderId' => 'required|string',
+    ]);
 
-        // Prepare the payload
-        $payload = [
-            'userName' => $this->userName,
-            'password' => $this->password,
-            'orderId' => $validated['orderId'],
-            'language' => 'AR', // Set your preferred language (AR, FR, EN)
-        ];
+    $url = $this->paymentGatewayBaseUrl . "confirmOrder.do";
+
+    // إعداد البيانات المرسلة إلى API
+    $payload = [
+        'userName' => $this->userName,
+        'password' => $this->password,
+        'orderId' => $validated['orderId'],
+        'language' => 'AR', // اللغة المفضلة
+    ];
+
+    try {
+        // إرسال الطلب إلى API
         $response = Http::get($url, $payload);
-        $data = $response->json();
-
-        //dd($data);
+        
+        if ($response->successful()) {
+            $data = $response->json();
+            //dd($data);
         /*
         // Simulated static response for testing
-        $response = [
+        $data = [
             "expiration" => "202104",
             "cardholderName" => "TEST TEST",
             "depositAmount" => 11999,
@@ -135,146 +157,190 @@ class PaymentController extends Controller
         ];
 
         // Log or debug the response for testing
-        //dd($response);
+        
         */
+            // التحقق من حالة الطلب
+            if (isset($data['OrderStatus']) && $data['OrderStatus'] == 2) {
+                // تحديث حالة التبرع في قاعدة البيانات
+                $donation = Donation::where('order_number', $data['OrderNumber'])->first();
 
+                if ($donation) {
+                    $donation->update([
+                        'status' => 'success',
+                    ]);
 
-        // Handle payment success logic
-        if (isset($data['OrderStatus']) && $data['OrderStatus'] == 2) {
-            // Update the donation status in the database
-            $donation = Donation::where('order_number', $data['OrderNumber'])->first();
-            $number = (float) $donation->amount;
+                    // تحويل المبلغ إلى كلمات
+                    $number = (float) $donation->amount;
+                    $words = NumToArabic::number2Word($number);
 
-            $words = NumToArabic::number2Word($number);
+                    // جلب بيانات إضافية لعرضها في صفحة النجاح
+                    $contact = Contact::first();
+                    $footerRecentPosts = Post::orderBy('created_at', 'desc')->take(2)->get();
 
-            //dd($number,$words);
-            if ($donation) {
-                $donation->update([
-                    'status' => 'success',
-                ]);
+                    // عرض رسالة النجاح للمستخدم
+                    return view('pages.payment.success', [
+                        'message' => $data['actionCodeDescription'] ?? 'تمت عملية الدفع بنجاح.',
+                        'amount' => $donation->amount ?? 0,
+                        'words' => $words,
+                        'contact' => $contact,
+                        'donation' => $donation,
+                        'footerRecentPosts' => $footerRecentPosts,
+                        'orderNumber' => $data['OrderNumber'] ?? '',
+                    ]);
+                }
             }
 
-            $contact = Contact::first();
-            $footerRecentPosts = Post::orderBy('created_at', 'desc')->take(2)->get();
-
-            // Show success message to the user
-            return view('pages.payment.success', [
-                'message' => $data['actionCodeDescription'] ?? 'Votre paiement a été accepté',
-                'amount' => $donation->amount ?? 0,
-                'words' => $words,
-                'contact' => $contact,
-                'donation' => $donation,
-                'footerRecentPosts' => $footerRecentPosts,
-                'orderNumber' => $data['OrderNumber'] ?? '',
+            // إذا لم تكن حالة الطلب ناجحة
+            return redirect()->route('payment.failure')->withErrors([
+                'error' => $data['actionCodeDescription'] ?? 'حدث خطأ غير معروف. يرجى المحاولة مرة أخرى.',
             ]);
         }
 
-        // If OrderStatus is not 2, treat it as a failure
-        return redirect()->route('payment.failure')->withErrors([
-            'error' => $data['actionCodeDescription'] ?? 'Erreur inconnue, veuillez réessayer.',
-        ]);
+        // تسجيل الخطأ إذا فشل الطلب
+        \Log::error('خطأ في استجابة الدفع', ['response' => $response->body()]);
 
+        return redirect()->route('payment.failure')->withErrors([
+            'error' => 'فشل في الاتصال بواجهة الدفع. يرجى المحاولة مرة أخرى لاحقًا.',
+        ]);
+    } catch (\Exception $e) {
+        // تسجيل الاستثناء
+        \Log::error('استثناء في معالجة نجاح الدفع', ['message' => $e->getMessage()]);
+
+        // معالجة الأخطاء غير المتوقعة
+        return redirect()->route('payment.failure')->withErrors([
+            'error' => 'حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى لاحقًا.',
+        ]);
     }
+}
 
     /**
      * معالجة فشل الدفع.
      */
     public function paymentFailure(Request $request)
     {
-        // Validate the incoming request
-
-        
+        // التحقق من الطلب الوارد
         $validated = $request->validate([
             'orderId' => 'required|string',
         ]);
+    
         $url = $this->paymentGatewayBaseUrl . "confirmOrder.do";
-
-        // Prepare the payload
+    
+        // إعداد البيانات المرسلة إلى API
         $payload = [
             'userName' => $this->userName,
             'password' => $this->password,
             'orderId' => $validated['orderId'],
-            'language' => 'AR', // Set your preferred language (AR, FR, EN)
+            'language' => 'AR', // اللغة المفضلة
         ];
-
-        $response = Http::get($url, $payload);
-
-        // Decode the response
-        $data = $response->json();
-        
-         /*       
-        $data = [
-            "expiration" => "202701",
-            "cardholderName" => "**********",
-            "depositAmount" => 0,
-            "currency" => "012",
-            "authCode" => 2,
-            "params" => [
-                "respCode_desc" => "تم رفض معاملتك يرجى الاتصال بالبنك الذي تتعامل معه. رمز الخطأ: 37",
-                "respCode" => "37"
-            ],
-            "actionCode" => 203,
-            "actionCodeDescription" => "processing.error.203",
-            "ErrorCode" => 3,
-            "ErrorMessage" => "Order is not confirmed due to order’s state",
-            "OrderStatus" => 6,
-            "OrderNumber" => "17421094946227",
-            "Pan" => "628058**6712",
-            "Amount" => 1000000,
-            "Ip" => "105.100.17.189",
-            "SvfeResponse" => "37"
-        ];
-        */
-        $donation = Donation::where('order_number', $data['OrderNumber'])->first();
-        if ($donation) {
-            $donation->update([
-                'status' => 'failed',
+    
+        try {
+            // إرسال الطلب إلى API
+            $response = Http::get($url, $payload);
+    
+            if ($response->successful()) {
+                $data = $response->json();
+                /*       
+                $data = [
+                    "expiration" => "202701",
+                    "cardholderName" => "**********",
+                    "depositAmount" => 0,
+                    "currency" => "012",
+                    "authCode" => 2,
+                    "params" => [
+                        "respCode_desc" => "تم رفض معاملتك يرجى الاتصال بالبنك الذي تتعامل معه. رمز الخطأ: 37",
+                        "respCode" => "37"
+                    ],
+                    "actionCode" => 203,
+                    "actionCodeDescription" => "processing.error.203",
+                    "ErrorCode" => 3,
+                    "ErrorMessage" => "Order is not confirmed due to order’s state",
+                    "OrderStatus" => 6,
+                    "OrderNumber" => "17421094946227",
+                    "Pan" => "628058**6712",
+                    "Amount" => 1000000,
+                    "Ip" => "105.100.17.189",
+                    "SvfeResponse" => "37"
+                ];
+                */
+                // تحديث حالة التبرع في قاعدة البيانات إذا كانت موجودة
+                $donation = Donation::where('order_number', $data['OrderNumber'] ?? null)->first();
+                if ($donation) {
+                    $donation->update([
+                        'status' => 'failed',
+                    ]);
+                }
+    
+                $orderNumber = $data['OrderNumber'] ?? null;
+                $amount = isset($data['Amount']) ? $data['Amount'] / 100 : null;
+    
+                // التحقق من حالة الطلب
+                if (
+                    isset($data['params']['respCode'], $data['ErrorCode'], $data['OrderStatus']) &&
+                    $data['params']['respCode'] === "00" &&
+                    (string) $data['ErrorCode'] === "0" &&
+                    $data['OrderStatus'] === 3
+                ) {
+                    // المعاملة مرفوضة
+                    $contact = Contact::first();
+                    $footerRecentPosts = Post::orderBy('created_at', 'desc')->take(2)->get();
+                    return view('pages.payment.fail', compact('contact', 'footerRecentPosts', 'orderNumber', 'amount'))->withErrors([
+                        'error' => "تم رفض معاملتك. يرجى الاتصال بالبنك الذي تتعامل معه.",
+                    ]);
+                } else {
+                    // عرض رسالة الخطأ المناسبة
+                    $errorMessage = $data['params']['respCode_desc'] ?? $data['actionCodeDescription'] ?? "خطأ غير معروف.";
+                    $contact = Contact::first();
+                    $footerRecentPosts = Post::orderBy('created_at', 'desc')->take(2)->get();
+    
+                    return view('pages.payment.fail', compact('contact', 'footerRecentPosts', 'orderNumber', 'amount'))->withErrors([
+                        'error' => $errorMessage,
+                    ]);
+                }
+            }
+    
+            // تسجيل الخطأ إذا فشل الطلب
+            \Log::error('خطأ في استجابة الدفع', ['response' => $response->body()]);
+    
+            return redirect()->route('payment.failure')->withErrors([
+                'error' => 'فشل في الاتصال بواجهة الدفع. يرجى المحاولة مرة أخرى لاحقًا.',
+            ]);
+        } catch (\Exception $e) {
+            // تسجيل الاستثناء
+            \Log::error('استثناء في معالجة فشل الدفع', ['message' => $e->getMessage()]);
+    
+            // معالجة الأخطاء غير المتوقعة
+            return redirect()->route('payment.failure')->withErrors([
+                'error' => 'حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى لاحقًا.',
             ]);
         }
-        $orderNumber = $data['OrderNumber'] ?? null;
-        $amount = $data['Amount']/100 ?? null;
-        // Check for "rejected" status
-        if (
-            isset($data['params']['respCode'], $data['ErrorCode'], $data['OrderStatus']) &&
-            $data['params']['respCode'] === "00" &&
-            (string) $data['ErrorCode'] === "0" &&
-            $data['OrderStatus'] === 3
-        ) {
-            // Transaction rejected
-            $contact = Contact::first();
-            $footerRecentPosts = Post::orderBy('created_at', 'desc')->take(2)->get();
-            return view('pages.payment.fail', compact('contact', 'footerRecentPosts','orderNumber','amount'))->withErrors([
-                'error' => "Your transaction was rejected / تم رفض معاملتك."
-            ]);
-        } else {
-            // Display respCode_desc if available, otherwise actionCodeDescription
-            $errorMessage = $data['params']['respCode_desc'] ?? $data['actionCodeDescription'] ?? "Unknown error / خطأ غير معروف.";
-            $contact = Contact::first();
-            $footerRecentPosts = Post::orderBy('created_at', 'desc')->take(2)->get();
-            
-            return view('pages.payment.fail', compact('contact', 'footerRecentPosts','orderNumber','amount'))->withErrors([
-                'error' => $errorMessage
-            ]);
-        }
-
     }
     public function sendReceiptEmail(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-            'orderNumber' => 'required',
-            'amount' => 'required',
-            'words' => 'required',
-            'donationDate' => 'required',
-            'receiptImage' => 'required'
-        ]);
+{
+    // التحقق من المدخلات
+    $validated = $request->validate([
+        'email' => 'required|email',
+        'orderNumber' => 'required|string',
+        'amount' => 'required|numeric',
+        'words' => 'required|string',
+        'donationDate' => 'required|date',
+        'receiptImage' => 'required|string', // يجب أن تكون صورة Base64
+    ], [
+        'email.required' => 'البريد الإلكتروني مطلوب.',
+        'email.email' => 'يجب إدخال بريد إلكتروني صالح.',
+        'orderNumber.required' => 'رقم الطلب مطلوب.',
+        'amount.required' => 'المبلغ مطلوب.',
+        'words.required' => 'المبلغ بالكلمات مطلوب.',
+        'donationDate.required' => 'تاريخ التبرع مطلوب.',
+        'receiptImage.required' => 'صورة الإيصال مطلوبة.',
+    ]);
 
-        $email = $request->email;
-        $orderNumber = $request->orderNumber;
-        $amount = $request->amount;
-        $words = $request->words;
-        $donationDate = $request->donationDate;
-        $receiptImage = $request->receiptImage;
+    try {
+        $email = $validated['email'];
+        $orderNumber = $validated['orderNumber'];
+        $amount = $validated['amount'];
+        $words = $validated['words'];
+        $donationDate = $validated['donationDate'];
+        $receiptImage = $validated['receiptImage'];
 
         // إرسال البريد الإلكتروني
         Mail::send('emails.receipt', compact('orderNumber', 'amount', 'words', 'donationDate'), function ($message) use ($email, $receiptImage) {
@@ -288,7 +354,14 @@ class PaymentController extends Controller
             ]);
         });
 
-        return response()->json(['success' => true]);
+        return response()->json(['success' => true, 'message' => 'تم إرسال الإيصال بنجاح.']);
+    } catch (\Exception $e) {
+        // تسجيل الخطأ
+        \Log::error('خطأ أثناء إرسال البريد الإلكتروني', ['message' => $e->getMessage()]);
+
+        // إعادة استجابة الخطأ
+        return response()->json(['success' => false, 'message' => 'حدث خطأ أثناء إرسال الإيصال. يرجى المحاولة مرة أخرى لاحقًا.'], 500);
     }
+}
 
 }
