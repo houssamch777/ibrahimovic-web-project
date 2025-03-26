@@ -44,10 +44,17 @@
                                 <div class="card-body">
                                     <h4 class="card-title text-center">تفاصيل العملية</h4>
                                     <div class="text-center">
-                                    <p><strong>رقم الطلب:</strong> {{ $orderNumber }}</p>
-                                    <p><strong>المبلغ:</strong> {{ number_format($amount, 2) }} دج</p>
-                                    <p><strong>المبلغ بالحروف:</strong> {{ $words }} دينار  جزائري</p>
-                                </div>
+                                        <p><strong>رقم الطلب:</strong> {{ $orderNumber }}</p>
+                                        <p><strong>رقم المعاملة:</strong> {{ $orderId }}</p>
+                                        <p><strong>الرمز التأكيدي:</strong> {{ $approvalCode }}</p>
+                                        <p><strong>الوصف:</strong> {{ $message }}</p>
+                                        <p><strong>التاريخ والوقت:</strong> {{ \Carbon\Carbon::parse($donation->updated_at)->format('Y-m-d H:i:s') }}</p>
+                                        <p><strong>طريقة الدفع:</strong> بطاقة ذهبية/CIB</p>
+                                        <p><strong>المبلغ:</strong> {{ number_format($amount, 2) }} دج</p>
+                                        <p><strong>المبلغ بالحروف:</strong> {{ $words }} دينار جزائري</p>
+                                        <p><strong>ملاحظة:</strong> في حال وجود أي مشكلة في الدفع، يرجى الاتصال بالرقم الأخضر لـ SATIM:3020</p>
+                                        <img src="{{ asset('assets/3020.png') }}" alt="الدعم الفني">
+                                    </div>
                                 </div>
                             </div>
                         
@@ -90,7 +97,8 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
                 
-                <button onclick="openReceiptModal('{{$orderNumber}}', '{{$amount}}', '{{$words}}', '{{$donation->updated_at}}')">عرض الإيصال</button>
+                <button onclick="openReceiptModal('{{ $orderNumber }}', '{{ $amount }}', '{{ $words }}', '{{ $donation->updated_at }}', '{{ $orderId }}', '{{ $approvalCode }}', 'ملاحظة:في حال وجود أي مشكلة في الدفع، يرجى الاتصال بالرقم الأخضر لـ SATIM:3020')">عرض الإيصال</button>
+
 
             </div>
         </div>
@@ -146,7 +154,7 @@
 
     return `${dayName} ${day} ${month} ${year}`;
     }
-    function openReceiptModal(orderNumber, amount, words, donationDate) {
+    function  openReceiptModal(orderNumber, amount, words, donationDate, orderId, approvalCode, note) {
     // جلب القيم من المدخلات أو من متغيرات الخادم
     const formattedDate = formatDonationDate(donationDate);
 console.log(formattedDate);
@@ -168,15 +176,19 @@ console.log(formattedDate);
         // إعداد النصوص
         ctx.font = '48px "Noto Kufi Arabic"';
         ctx.fillStyle = '#000';
-        
+
 
         // إضافة النصوص داخل الصورة
         ctx.fillText(amount + ' دج', 1600, 580); // المبلغ بالأرقام
-        ctx.fillText(words, 1600, 700);         // المبلغ بالحروف
+        ctx.fillText(words + ' دج', 1600, 700);         // المبلغ بالحروف
         ctx.fillText(donorName, 1600, 800);     // اسم المتبرع
         ctx.fillText(formattedDate, 800, 980); // التاريخ
         ctx.fillText(orderNumber, 880, 1070);   // رقم الطلب
-
+        ctx.font = '36px "Noto Kufi Arabic"';
+        ctx.fillStyle = '#000';
+        ctx.fillText('رقم الطلب :'+orderId, 860, 1125);       // رقم المعاملة
+        ctx.fillText('رقم التفويض :'+approvalCode, 2125, 1125);  // الرمز التأكيدي
+        ctx.fillText(note, 1920, 1180);          // الملاحظة
         // عرض المودال
         const modal = new bootstrap.Modal(document.getElementById('receiptModal'));
         modal.show();
