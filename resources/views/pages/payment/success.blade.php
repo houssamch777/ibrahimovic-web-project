@@ -179,16 +179,16 @@ console.log(formattedDate);
 
 
         // إضافة النصوص داخل الصورة
-        ctx.fillText(amount + ' دج', 1600, 580); // المبلغ بالأرقام
-        ctx.fillText(words + ' دج', 1600, 700);         // المبلغ بالحروف
+        ctx.fillText(amount + ' دج', 2000, 580); // المبلغ بالأرقام
+        ctx.fillText(words + ' دج', 2000, 700);         // المبلغ بالحروف
         ctx.fillText(donorName, 1600, 800);     // اسم المتبرع
-        ctx.fillText(formattedDate, 800, 980); // التاريخ
+        ctx.fillText(formattedDate, 900, 980); // التاريخ
         ctx.fillText(orderNumber, 880, 1070);   // رقم الطلب
         ctx.font = '36px "Noto Kufi Arabic"';
         ctx.fillStyle = '#000';
-        ctx.fillText('رقم الطلب :'+orderId, 860, 1125);       // رقم المعاملة
-        ctx.fillText('رقم التفويض :'+approvalCode, 2125, 1125);  // الرمز التأكيدي
-        ctx.fillText(note, 1920, 1180);          // الملاحظة
+        ctx.fillText('رقم الطلب :'+orderId,2300, 980);       // رقم المعاملة
+        ctx.fillText('رقم التفويض :'+approvalCode, 2300, 1070);  // الرمز التأكيدي
+        ctx.fillText(note, 1920, 1160);          // الملاحظة
         // عرض المودال
         const modal = new bootstrap.Modal(document.getElementById('receiptModal'));
         modal.show();
@@ -196,11 +196,29 @@ console.log(formattedDate);
 
     // تفعيل زر الحفظ لتنزيل الصورة
     document.getElementById('saveReceiptButton').onclick = function () {
-        const link = document.createElement('a');
-        link.download = 'receipt.png';
-        link.href = canvas.toDataURL();
-        link.click();
-    };
+    // الحصول على الـ canvas
+    const canvas = document.getElementById('receiptCanvas');
+
+    // تحويل الـ canvas إلى صورة
+    const imageData = canvas.toDataURL('image/png');
+    const { jsPDF } = window.jspdf; // Import jsPDF
+
+    // إنشاء كائن PDF بحجم A4
+    const pdf = new jsPDF('portrait', 'pt', 'a4');
+    const pageWidth = 595.28; // عرض صفحة A4 بالنقاط
+    const pageHeight = 841.89; // ارتفاع صفحة A4 بالنقاط
+
+    // تعديل حجم الصورة لتتناسب مع عرض الصفحة
+    const imageWidth = pageWidth; // عرض الصورة يساوي عرض الصفحة
+    const aspectRatio = canvas.height / canvas.width; // نسبة العرض إلى الارتفاع
+    const imageHeight = imageWidth * aspectRatio; // حساب ارتفاع الصورة بناءً على النسبة
+
+    // إضافة الصورة إلى أعلى الصفحة
+    pdf.addImage(imageData, 'PNG', 0, 0, imageWidth, imageHeight);
+
+    // تنزيل ملف PDF
+    pdf.save('receipt.pdf');
+};
 }
 
 </script>
@@ -255,6 +273,7 @@ document.getElementById('printReceiptButton').onclick = function () {
             const canvas = document.getElementById('receiptCanvas');
             const imageData = canvas.toDataURL('image/png'); // تحويل الصورة إلى بيانات Base64
 
+            
             // إرسال الطلب إلى الخادم
             fetch('{{ route("send.receipt.email") }}', {
                 method: 'POST',

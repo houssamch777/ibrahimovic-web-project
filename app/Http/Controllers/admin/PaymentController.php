@@ -7,11 +7,11 @@ use App\Models\Contact;
 use App\Models\Donation;
 use App\Models\Post;
 use App\Rules\ReCaptcha;
-use I18N_Arabic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 use Hassanhelfi\NumberToArabic\NumToArabic;
+use Illuminate\Support\Str;
 use Mail;
 
 class PaymentController extends Controller
@@ -30,6 +30,17 @@ class PaymentController extends Controller
         $this->password = env('SATIM_PASSWORD'); // Merchant password
         $this->forceTerminalId = env('SATIM_TERMINAL_ID'); // Assigned terminal ID
     }
+    function generateUniqueOrderNumber($length = 10)
+{
+    // Current timestamp
+    $timestamp = now()->format('YmdHis'); // e.g., 20250327123456
+    
+    // Random alphanumeric characters
+    $randomString = strtoupper(Str::random($length - strlen($timestamp)));
+    
+    // Combine timestamp and random string to ensure uniqueness
+    return substr($timestamp . $randomString, 0, $length);
+}
     public function create(Request $request)
     {
         // قواعد التحقق
@@ -42,7 +53,10 @@ class PaymentController extends Controller
 
         $url = $this->paymentGatewayBaseUrl . "register.do";
         $amount = $validated['amount'] * 100; // تحويل المبلغ إلى الشكل المناسب
-        $orderNumber = time() . mt_rand(10, 99); // إنشاء رقم طلب فريد
+        // Current timestamp
+        $uniqueId = strtoupper(uniqid());
+        $length = 10;
+        $orderNumber = substr($uniqueId, 0, $length);
         $id = uniqid('donation_');
         // إعداد JSON Params
         $jsonParams = json_encode([
@@ -328,7 +342,7 @@ private function getPaymentStatus($data)
             'donationDate.required' => 'تاريخ التبرع مطلوب.',
             'receiptImage.required' => 'صورة الإيصال مطلوبة.',
         ]);
-
+    
         try {
             $email = $validated['email'];
             $orderNumber = $validated['orderNumber'];
@@ -336,24 +350,43 @@ private function getPaymentStatus($data)
             $words = $validated['words'];
             $donationDate = $validated['donationDate'];
             $receiptImage = $validated['receiptImage'];
-
+    
+            // تحويل الصورة Base64 إلى PDF
+            $imageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $receiptImage));
+            
+            // إنشاء PDF جديد
+            $pdf = new \TCPDF();
+            $pdf->AddPage();
+            
+            // حفظ الصورة في ملف مؤقت
+            $tempImagePath = tempnam(sys_get_temp_dir(), 'receipt');
+            file_put_contents($tempImagePath, $imageData);
+            
+            // إضافة الصورة إلى PDF
+            $pdf->Image($tempImagePath, 15, 25, 180, 0, '', '', '', false, 300, '', false, false, 0);
+            
+            // حذف الملف المؤقت
+            unlink($tempImagePath);
+            
+            // الحصول على محتوى PDF
+            $pdfContent = $pdf->Output('', 'S');
+    
             // إرسال البريد الإلكتروني
-            Mail::send('emails.receipt', compact('orderNumber', 'amount', 'words', 'donationDate'), function ($message) use ($email, $receiptImage) {
+            Mail::send('emails.receipt', compact('orderNumber', 'amount', 'words', 'donationDate'), function ($message) use ($email, $pdfContent, $orderNumber) {
                 $message->to($email)
                     ->subject('إيصال التبرع الخاص بك');
-
-                // إضافة الصورة كملف مرفق
-                $imageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $receiptImage));
-                $message->attachData($imageData, 'receipt.png', [
-                    'mime' => 'image/png',
+    
+                // إضافة PDF كمرفق
+                $message->attachData($pdfContent, 'receipt_' . $orderNumber . '.pdf', [
+                    'mime' => 'application/pdf',
                 ]);
             });
-
+    
             return response()->json(['success' => true, 'message' => 'تم إرسال الإيصال بنجاح.']);
         } catch (\Exception $e) {
             // تسجيل الخطأ
             \Log::error('خطأ أثناء إرسال البريد الإلكتروني', ['message' => $e->getMessage()]);
-
+    
             // إعادة استجابة الخطأ
             return response()->json(['success' => false, 'message' => 'حدث خطأ أثناء إرسال الإيصال. يرجى المحاولة مرة أخرى لاحقًا.'], 500);
         }
