@@ -115,5 +115,10 @@ Route::get('foo', function () {
     Artisan::call('route:clear');
     Artisan::call('view:clear');
     Artisan::call('storage:link');
+    // Artisan::call('optimize');
+    Artisan::call('optimize');
+    Artisan::call('config:cache');
+    Artisan::call('route:cache');
+    Artisan::call('view:cache');
     return redirect()->route('home')->with('success', 'All caches cleared!');
 });

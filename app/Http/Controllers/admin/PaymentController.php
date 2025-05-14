@@ -23,12 +23,12 @@ class PaymentController extends Controller
     private $forceTerminalId;
 
 
-    public function __construct()
+        public function __construct()
     {
-        $this->paymentGatewayBaseUrl = "https://test.satim.dz/payment/rest/";
-        $this->userName = env('SATIM_USERNAME'); // Merchant username
-        $this->password = env('SATIM_PASSWORD'); // Merchant password
-        $this->forceTerminalId = env('SATIM_TERMINAL_ID'); // Assigned terminal ID
+        $this->paymentGatewayBaseUrl = config('payment.satim.base_url');
+        $this->userName = config('payment.satim.username');
+        $this->password = config('payment.satim.password');
+        $this->forceTerminalId = config('payment.satim.terminal_id');
     }
     function generateUniqueOrderNumber($length = 10)
 {
@@ -77,11 +77,13 @@ class PaymentController extends Controller
             'language' => 'AR',
             'jsonParams' => $jsonParams,
         ];
+        
+        //dd(base_path('.env'),$url, $payload,$this->userName, $this->password, $this->forceTerminalId,env('SATIM_PASSWORD'));
 
         try {
             // إرسال الطلب إلى واجهة SATIM API
             $response = Http::get($url, $payload);
-            //dd($response->json());
+            //dd($url, $payload,$response->json(),$this->userName, $this->password, $this->forceTerminalId,env('SATIM_PASSWORD'));
             if ($response->successful()) {
                 $data = $response->json();
                 //dd($data,$url, $payload);
